@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字底部行线</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        p{
+            display: inline-block;
+            background-position-x: right;
+            background: linear-gradient(to right, #ec695c, #61c454) no-repeat right bottom;
+            background-size: 0 2px;
+            transition: background-size 0.5s;
+        }
+        p:hover{
+            background-position-x: left;
+            background-size: 100% 2px;
+        }
+    </style>
+</head>
+<body>
+    <p>我是一只小鸭子,咿呀咿呀哟!我是一只小鸭子,咿呀咿呀哟!我是一只小鸭子,咿呀咿呀哟!我是一只小鸭子,咿呀咿呀哟!我是一只小鸭子,咿呀咿呀哟!</p>
+</body>
+</html>

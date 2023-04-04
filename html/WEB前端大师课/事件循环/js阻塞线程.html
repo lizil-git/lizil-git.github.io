@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>欢迎进入联系阻塞代码页面</h1>
+<button>变化</button></button>
+<script>
+    let h1 = document.querySelector('h1');
+    let btn = document.querySelector("button");
+
+    function delay(duration) {
+        var start = Date.now();
+        while(Date.now() - start < duration) {};
+    }
+    btn.onclick = function () {
+        h1.textContent = '我是点击后变化的内容';
+        delay(3000)
+    }
+</script>
+</body>
+</html>

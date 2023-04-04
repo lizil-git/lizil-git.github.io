@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标进入移动图片</title>
+    <style>
+        .containner{
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="containner" id="containner">
+       
+    </div>
+</body>
+<script>
+    const containner = document.getElementById('containner')
+    const rect = containner.getBoundingClientRect();
+    const theta = Math.atan2(rect.height/rect.width);
+
+    containner.addEventListener('mouseenter', (e) => {
+       let y = rect.height / 2 - e.offsetY;
+       let x = e.offsetX - rect.width / 2;
+        
+    })
+</script>
+</html>

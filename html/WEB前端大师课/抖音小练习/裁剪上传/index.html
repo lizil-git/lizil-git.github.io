@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裁剪上传</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .cut-img-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        #preview {
+            min-width: 300px;
+            min-height: 300px;
+        }
+
+        .cut-content {
+            position: absolute;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            min-width: 100px;
+            min-height: 100px;
+            resize: both;
+            z-index: 1;
+            background-color: red;
+            resize: both;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file">
+    <div class="cut-img-container">
+        <div draggable="true" class="cut-content"></div>
+        <img id="preview">
+    </div>
+    <button>裁剪图片后的File对象</button>
+    <script>
+        const inpFile = document.querySelector('input[type="file"]');
+        const img = document.querySelector('#preview');
+        const btn = document.querySelector('button')
+        inpFile.onchange = function (e) {
+            let file = e.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                // 本地裁剪
+            }
+            reader.readAsDataURL(file)
+        }
+        btn.onclick = function () {
+            const cutInfo = {
+                x: 500,
+                y: 500,
+                cutWidth: 300,
+                cutHeight: 300,
+                width: 100,
+                height: 100
+            }
+            let canvas = document.createElement('canvas')
+            canvas.width = cutInfo.width;
+            canvas.height = cutInfo.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, cutInfo.cutWidth, cutInfo.cutHeight) // 将图片绘画到canvas上,参数: 需要花的图片 起点位置,绘画大小
+            canvas.toBlob((blob) => {
+                let file = new File(blob, 'name.jpg', {
+                    type: 'image/jpeg'
+                })
+                console.log(file);
+            }, 'image/jpeg')
+            document.body.appendChild(canvas)
+        }
+
+    </script>
+</body>
+
+</html>
