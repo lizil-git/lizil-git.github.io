@@ -129,7 +129,7 @@ body {
   background-color: var(--body-background-color);
   box-sizing: border-box;
   overflow-wrap: break-word;
-  background: url("../img/banner.svg");
+  background: url("https://www.liyueer.cn/img/banner.svg") 100% 100% no-repeat;
 }
 ol ol,
 ul ol,
