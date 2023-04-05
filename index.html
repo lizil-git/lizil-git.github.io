@@ -148,6 +148,9 @@
   
   
   
+    
+    <link rel="prefetch" href="//unpkg.com/valine/dist/Valine.min.js" as="script">
+  
   
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -371,7 +374,7 @@
       </a>
       <div class="card-excerpt">
         
-          const fs = require(&amp;#x27;fs&amp;#x27;);const path...
+          const fs = 
         
       </div>
       <div class="card-post-footer">
@@ -429,7 +432,7 @@
       </a>
       <div class="card-excerpt">
         
-          yarn:::info设置包下载源：yarn config set npmRe...
+          yarn设置包下载源...
         
       </div>
       <div class="card-post-footer">
@@ -583,6 +586,19 @@
     
     
     
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
  
     
@@ -627,6 +643,10 @@
      
      
     <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
      
     
       <script>
@@ -649,6 +669,10 @@
     <script src="//instant.page/5.1.0" type="module"
       integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
     
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
     
   </body>
 </html>
