@@ -14,27 +14,31 @@
     id="theme-color">
   <meta 
     name="description" 
-    content="Hexo">
+    content="个人学习成长之路">
   <link 
     rel="icon" 
     href="/">
-  <title>自动创建html</title>
+  <title>Hello World</title>
   
     
       <meta 
         property="og:title" 
-        content="自动创建html">
+        content="Hello World">
     
     
       <meta 
         property="og:url" 
-        content="https://www.liyueer.cn/2023/04/04/%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BAhtml/index.html">
+        content="https://www.liyueer.cn/posts/4a17b156.html">
     
     
       <meta 
         property="og:img" 
-        content="https://img.songhn.com/img/Y67gdd.png">
+        content="https://www.liyueer.cn/img/1.png">
     
+    
+      <meta 
+        property="og:img" 
+        content="个人学习成长之路">
     
     
       <meta 
@@ -45,7 +49,7 @@
         content="2023-04-04">
       <meta 
         property="og:article:modified_time" 
-        content="2023-04-04">
+        content="2023-04-05">
       <meta 
         property="og:article:author" 
         content="李自力">
@@ -270,7 +274,7 @@
               <div class="card card-author">
                 
   <img 
-    src="https://img.songhn.com/img/Y67gdd.png" 
+    src="https://www.liyueer.cn/img/1.png" 
     class="author-img"
     width="88"
     height="88"
@@ -311,7 +315,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
       </div>
     </article>
   
@@ -352,11 +356,11 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      自动创建html
+      Hello World
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2023-04-04T08:13:12.282Z">
+    <time datetime="2023-04-04T06:57:51.880Z">
       <i 
         class="iconfont icon-calendar" 
         style="margin-right: 2px;">
@@ -366,7 +370,7 @@
     
     
       <span class="dot"></span>
-      <span>686 字</span>
+      <span>75 字</span>
     
   </div>
   
@@ -374,8 +378,19 @@
   <div 
     id="section" 
     class="post-content">
-    <pre class="highlight"><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const outFileBasePath = path.join(__dirname, &#x27;../static&#x27;);</span><br><span class="line">const dirCache = &#123;&#125;;</span><br><span class="line">let pageRouter = [</span><br><span class="line">    &#123;</span><br><span class="line">        title: &#x27;&#x27;,</span><br><span class="line">        description: &#x27;&#x27;,</span><br><span class="line">        fileName: &#x27;/introduce/payroll_calculate_incomeTax&#x27;,</span><br><span class="line">        style: &#x27;&#x27;,</span><br><span class="line">        script: &#x27;&#x27;,</span><br><span class="line">        width: 750,</span><br><span class="line">        imgList: [</span><br><span class="line">            &#123;</span><br><span class="line">                url: &#x27;https://salary-1307799014.cos.ap-beijing.myqcloud.com/static/image/payroll_calculate_incometax_introduce_1667_12583.jpg&#x27;,</span><br><span class="line">                alt: &#x27;产品介绍图&#x27;,</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        title: &#x27;邀请企业，赚大额现金&#x27;,</span><br><span class="line">        description: &#x27;&#x27;,</span><br><span class="line">        fileName: &#x27;/invitationFriend&#x27;,</span><br><span class="line">        style: `</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .content &#123;</span><br><span class="line">        background: #FF4A44;</span><br><span class="line">        padding-bottom: 67px;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">        `,</span><br><span class="line">        script: &#x27;&#x27;,</span><br><span class="line">        width: 500,</span><br><span class="line">        imgList: [</span><br><span class="line">            &#123;</span><br><span class="line">                url: &#x27;https://salary-1307799014.cos.ap-beijing.myqcloud.com/images/202209/20230316-145917.jpg&#x27;,</span><br><span class="line">                alt: &#x27;邀请企业福利介绍&#x27;,</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br><span class="line">pageRouter.forEach(router =&gt; &#123;</span><br><span class="line">    let filePath = outFileBasePath + router.fileName;</span><br><span class="line">    let fileContent = `&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">&lt;link rel=&quot;icon&quot; href=&quot;https://www.yygongzi.cn/favicon.ico&quot;&gt;</span><br><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">&lt;title&gt;$&#123;router.title || &#x27;用友工资条&#x27;&#125;&lt;/title&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    * &#123;</span><br><span class="line">        margin: 0;</span><br><span class="line">        padding: 0;</span><br><span class="line">        overflow-x: hidden;</span><br><span class="line">        -ms-overflow-style: none;</span><br><span class="line">        overflow: -moz-scrollbars-none;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    *::-webkit-scrollbar &#123;</span><br><span class="line">        display: none;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .content &#123;</span><br><span class="line">        width: 100vw;</span><br><span class="line">        min-height: 100vh;</span><br><span class="line">        background: #ffffff;</span><br><span class="line">        display: flex;</span><br><span class="line">        justify-content: flex-start;</span><br><span class="line">        flex-direction: column;</span><br><span class="line">        align-items: center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #mask &#123;</span><br><span class="line">        position: fixed;</span><br><span class="line">        top: 0;</span><br><span class="line">        left: 0;</span><br><span class="line">        right: 0;</span><br><span class="line">        bottom: 0;</span><br><span class="line">        z-index: 1;</span><br><span class="line">        background-color: #ffffff;</span><br><span class="line">        display: flex;</span><br><span class="line">        align-items: center;</span><br><span class="line">        justify-content: center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .loading &#123;</span><br><span class="line">        position: relative;</span><br><span class="line">        width: 30px;</span><br><span class="line">        height: 30px;</span><br><span class="line">        border: 2px solid rgba(0, 0, 0, 0.2);</span><br><span class="line">        border-left-color: #000;</span><br><span class="line">        border-radius: 100%;</span><br><span class="line">        animation: circle infinite 0.75s linear;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @keyframes circle &#123;</span><br><span class="line">        0% &#123;</span><br><span class="line">            transform: rotate(0);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        100% &#123;</span><br><span class="line">            transform: rotate(360deg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">$&#123;router.style&#125;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">        $&#123;router.imgList.map(item =&gt; &#123;</span><br><span class="line">    return `&lt;img src=&quot;&quot; alt=&quot;$&#123;item.alt&#125;&quot;&gt;`</span><br><span class="line">&#125;).join(&#x27;&#x27;)&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;mask&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;loading&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        let flag = 0;</span><br><span class="line">        let imgList = $&#123;JSON.stringify(router.imgList)&#125;;</span><br><span class="line">        let imgs = document.querySelectorAll(&#x27;.content img&#x27;);</span><br><span class="line">        let mask = document.querySelector(&#x27;#mask&#x27;)</span><br><span class="line">        imgs.forEach((e, i) =&gt; &#123;</span><br><span class="line">            let url = imgList[i].url + &#x27;?&#x27; + new Date().getTime();</span><br><span class="line">            e.src = url;</span><br><span class="line">            e.onload = function () &#123;</span><br><span class="line">                flag++;</span><br><span class="line">                if(flag === $&#123;router.imgList.length&#125;)&#123;</span><br><span class="line">                    handleImgWidth();</span><br><span class="line">                    window.addEventListener(&quot;resize&quot;, handleImgWidth);</span><br><span class="line">                    mask.style.display = &#x27;none&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        function handleImgWidth() &#123;</span><br><span class="line">            let imgArr = document.querySelectorAll(&#x27;.content img&#x27;);</span><br><span class="line">            let clientWidth = document.querySelector(&#x27;.content&#x27;).clientWidth;</span><br><span class="line">            if (clientWidth &gt; 750) &#123;</span><br><span class="line">                for (let i = 0; i &lt; imgArr.length; i++) &#123;</span><br><span class="line">                    imgArr[i].style.width = &#x27;$&#123;router.width&#125;px&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                for (let i = 0; i &lt; imgArr.length; i++) &#123;</span><br><span class="line">                    imgArr[i].style.width = &#x27;100vw&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">    $&#123;router.script&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br><span class="line">    `</span><br><span class="line">    mkdir(filePath + &#x27;/index.html&#x27;, fileContent)</span><br><span class="line">&#125;);</span><br><span class="line">function mkdir(filePath, data) &#123;</span><br><span class="line">    const arr = filePath.split(&#x27;/&#x27;);</span><br><span class="line">    let dir = arr[0];</span><br><span class="line">    for (let i = 1; i &lt; arr.length; i++) &#123;</span><br><span class="line">        if (dir &amp;&amp; !dirCache[dir] &amp;&amp; !fs.existsSync(dir)) &#123;</span><br><span class="line">            dirCache[dir] = true;</span><br><span class="line">            fs.mkdirSync(dir);</span><br><span class="line">        &#125;</span><br><span class="line">        dir = dir + &#x27;/&#x27; + arr[i];</span><br><span class="line">    &#125;</span><br><span class="line">    fs.writeFileSync(filePath, data, (err) =&gt; &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre>
-<pre class="highlight"><span class="line">&quot;build&quot;: &quot;node server/statusPage.js &amp;&amp; cross-env BASE_URL=&#x27;https://www.xxxxx.cn&#x27; nuxt build &quot;,</span><br><span class="line"></span><br></pre>
+    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="highlight"><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="highlight"><span class="line">$ hexo server</span><br></pre>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="highlight"><span class="line">$ hexo generate</span><br></pre>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="highlight"><span class="line">$ hexo deploy</span><br></pre>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
   </div>
   <div>
@@ -395,8 +410,8 @@
           <span style="font-weight: bold;">文章链接：</span><a 
             target="_blank" 
             rel="nofollow noopener noreferrer" 
-            href="https://www.liyueer.cn/2023/04/04/%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BAhtml/">
-            https://www.liyueer.cn/2023/04/04/自动创建html/
+            href="https://www.liyueer.cn/posts/4a17b156.html">
+            https://www.liyueer.cn/posts/4a17b156.html
           </a>
         </p>
         <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
@@ -406,15 +421,29 @@
 </article>
 <div class="nav">
   
+    <div class="nav-item-prev">
+      <a 
+        href="/posts/fd390730.html" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">上一篇</div>
+          
+            <div class="nav-title">自动创建html </div>
+          
+        </div>
+      </a>
+    </div>
+  
   
     <div class="nav-item-next">
       <a 
-        href="/2023/04/04/hello-world/" 
+        href="/posts/187a3295.html" 
         class="nav-link">
         <div>
           <div class="nav-label">下一篇</div>
           
-            <div class="nav-title">Hello World </div>
+            <div class="nav-title">包管理器命令 </div>
           
         </div>
         <i class="iconfont icon-right nav-next-icon"></i>
@@ -432,7 +461,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
 </div>
             </main>
             <aside class="right-column">
@@ -446,7 +475,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
     </article>
   
   
@@ -462,17 +491,17 @@
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2023-04-04</div>
-        <a href="/2023/04/04/%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BAhtml/"><div class="recent-posts-item-content">自动创建html</div></a>
+        <a href="/posts/fd390730.html"><div class="recent-posts-item-content">自动创建html</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2023-04-04</div>
-        <a href="/2023/04/04/hello-world/"><div class="recent-posts-item-content">Hello World</div></a>
+        <a href="/posts/4a17b156.html"><div class="recent-posts-item-content">Hello World</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2023-04-03</div>
-        <a href="/2023/04/03/%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%91%BD%E4%BB%A4/"><div class="recent-posts-item-content">包管理器命令</div></a>
+        <a href="/posts/187a3295.html"><div class="recent-posts-item-content">包管理器命令</div></a>
       </div>
     
   </div>
