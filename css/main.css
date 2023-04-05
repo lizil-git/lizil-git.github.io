@@ -129,6 +129,7 @@ body {
   background-color: var(--body-background-color);
   box-sizing: border-box;
   overflow-wrap: break-word;
+  background: url("../img/banner.svg");
 }
 ol ol,
 ul ol,
@@ -471,6 +472,7 @@ pre[class*='highlight'] {
   align-items: center;
 }
 .author-img {
+  border-radius: 50%;
   transition: all 0.5s;
 }
 .author-name {
