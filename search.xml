@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/posts/4a17b156.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="highlight"><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="highlight"><code class="hljs bash">$ hexo server<br></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="highlight"><code class="hljs bash">$ hexo generate<br></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="highlight"><code class="hljs bash">$ hexo deploy<br></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>包管理器命令</title>
     <url>/posts/187a3295.html</url>
     <content><![CDATA[<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><div class="post-note note-info"><p>设置包下载源：yarn config set npmRegistryServer<br>查看当前包下载源：yarn config get registry<br>自动安装最新版本，会覆盖指定版本号：yarn add [package]<br>一次性添加多个包：yarn add [package] [package] [package]<br>添加指定版本的包：yarn add [package]@[version]<br>安装某个tag：yarn add [package]@[tag]<br>添加到devDependencies：–dev，-D<br>添加到peerDependencies：–peer， -P<br>添加到optionalDependencies：–optional，-O<br>升级到最新版本：yarn upgrade [package]<br>升级到指定版本：yarn upgrade [package]@[version]<br>升级到指定tag：yarn upgrade [package]@[tag]<br>移除包：yarn remove [package]<br>安装所有依赖： yarn，yarn install<br>安装一个包的单一版本：yarn install –flat<br>强制重新下载所有包：yarn install –force<br>只安装生产环境依赖：yarn install –production<br>可以用来查看某个模块的最新版本信息：yarn info [package]<br>列出已缓存的每个包：yarn cache list<br>返回全局缓存位置：yarn cache dir<br>清除缓存：yarn cache clean </p></div>
