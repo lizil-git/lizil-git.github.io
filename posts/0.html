@@ -1,40 +1,387 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>自动创建html</title>
-    <url>/posts/fd390730.html</url>
-    <content><![CDATA[<p>直接上代码.这里主要是展示一种思想,将功能近乎相同的小页面抽离为一种配置即可完成的东西,防止自己做无用代码</p>
-<pre class="highlight"><code class="hljs JavaScript"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> outFileBasePath = path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;../static&#x27;</span>);<br><span class="hljs-keyword">const</span> dirCache = &#123;&#125;;<br><span class="hljs-keyword">let</span> pageRouter = [<br>    &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">fileName</span>: <span class="hljs-string">&#x27;/introduce/payroll_calculate_incomeTax&#x27;</span>, <span class="hljs-comment">// 路径</span><br>        <span class="hljs-attr">style</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">script</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">width</span>: <span class="hljs-number">750</span>,<br>        <span class="hljs-attr">imgList</span>: [<br>            &#123;<br>                <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;xxxxxx.png&#x27;</span>,<br>                <span class="hljs-attr">alt</span>: <span class="hljs-string">&#x27;产品介绍图&#x27;</span>,<br>            &#125;<br>        ]<br>    &#125;,<br>    &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;邀请企业，赚大额现金&#x27;</span>,<br>        <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">fileName</span>: <span class="hljs-string">&#x27;/invitationFriend&#x27;</span>, <span class="hljs-comment">// 路径</span><br>        <span class="hljs-attr">style</span>: <span class="hljs-string">`</span><br><span class="hljs-string">&lt;style&gt;</span><br><span class="hljs-string">    .content &#123;</span><br><span class="hljs-string">        background: #FF4A44;</span><br><span class="hljs-string">        padding-bottom: 67px;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">&lt;/style&gt;</span><br><span class="hljs-string">        `</span>,<br>        <span class="hljs-attr">script</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">width</span>: <span class="hljs-number">500</span>,<br>        <span class="hljs-attr">imgList</span>: [<br>            &#123;<br>                <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;xxxxxxxx.png&#x27;</span>,<br>                <span class="hljs-attr">alt</span>: <span class="hljs-string">&#x27;邀请企业福利介绍&#x27;</span>,<br>            &#125;<br>        ]<br>    &#125;<br>];<br>pageRouter.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">router</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">let</span> filePath = outFileBasePath + router.<span class="hljs-property">fileName</span>;<br>    <span class="hljs-keyword">let</span> fileContent = <span class="hljs-string">`&lt;!DOCTYPE html&gt;</span><br><span class="hljs-string">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">&lt;head&gt;</span><br><span class="hljs-string">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="hljs-string">&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="hljs-string">&lt;link rel=&quot;icon&quot; href=&quot;./favicon.ico&quot;&gt;</span><br><span class="hljs-string">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="hljs-string">&lt;title&gt;<span class="hljs-subst">$&#123;router.title || <span class="hljs-string">&#x27;页面标题&#x27;</span>&#125;</span>&lt;/title&gt;</span><br><span class="hljs-string">&lt;style&gt;</span><br><span class="hljs-string">    * &#123;</span><br><span class="hljs-string">        margin: 0;</span><br><span class="hljs-string">        padding: 0;</span><br><span class="hljs-string">        overflow-x: hidden;</span><br><span class="hljs-string">        -ms-overflow-style: none;</span><br><span class="hljs-string">        overflow: -moz-scrollbars-none;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    *::-webkit-scrollbar &#123;</span><br><span class="hljs-string">        display: none;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    .content &#123;</span><br><span class="hljs-string">        width: 100vw;</span><br><span class="hljs-string">        min-height: 100vh;</span><br><span class="hljs-string">        background: #ffffff;</span><br><span class="hljs-string">        display: flex;</span><br><span class="hljs-string">        justify-content: flex-start;</span><br><span class="hljs-string">        flex-direction: column;</span><br><span class="hljs-string">        align-items: center;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    #mask &#123;</span><br><span class="hljs-string">        position: fixed;</span><br><span class="hljs-string">        top: 0;</span><br><span class="hljs-string">        left: 0;</span><br><span class="hljs-string">        right: 0;</span><br><span class="hljs-string">        bottom: 0;</span><br><span class="hljs-string">        z-index: 1;</span><br><span class="hljs-string">        background-color: #ffffff;</span><br><span class="hljs-string">        display: flex;</span><br><span class="hljs-string">        align-items: center;</span><br><span class="hljs-string">        justify-content: center;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    .loading &#123;</span><br><span class="hljs-string">        position: relative;</span><br><span class="hljs-string">        width: 30px;</span><br><span class="hljs-string">        height: 30px;</span><br><span class="hljs-string">        border: 2px solid rgba(0, 0, 0, 0.2);</span><br><span class="hljs-string">        border-left-color: #000;</span><br><span class="hljs-string">        border-radius: 100%;</span><br><span class="hljs-string">        animation: circle infinite 0.75s linear;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">    @keyframes circle &#123;</span><br><span class="hljs-string">        0% &#123;</span><br><span class="hljs-string">            transform: rotate(0);</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        100% &#123;</span><br><span class="hljs-string">            transform: rotate(360deg);</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">&lt;/style&gt;</span><br><span class="hljs-string"><span class="hljs-subst">$&#123;router.style&#125;</span></span><br><span class="hljs-string">&lt;/head&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">&lt;body&gt;</span><br><span class="hljs-string">    &lt;div class=&quot;content&quot;&gt;</span><br><span class="hljs-string">        <span class="hljs-subst">$&#123;router.imgList.map(item =&gt; &#123;</span></span><br><span class="hljs-subst"><span class="hljs-string">    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;img src=&quot;&quot; alt=&quot;<span class="hljs-subst">$&#123;item.alt&#125;</span>&quot;&gt;`</span></span></span><br><span class="hljs-subst"><span class="hljs-string">&#125;).join(<span class="hljs-string">&#x27;&#x27;</span>)&#125;</span></span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string">    &lt;div id=&quot;mask&quot;&gt;</span><br><span class="hljs-string">        &lt;div class=&quot;loading&quot;&gt;&lt;/div&gt;</span><br><span class="hljs-string">    &lt;/div&gt;</span><br><span class="hljs-string">    &lt;script&gt;</span><br><span class="hljs-string">        let flag = 0;</span><br><span class="hljs-string">        let imgList = <span class="hljs-subst">$&#123;<span class="hljs-built_in">JSON</span>.stringify(router.imgList)&#125;</span>;</span><br><span class="hljs-string">        let imgs = document.querySelectorAll(&#x27;.content img&#x27;);</span><br><span class="hljs-string">        let mask = document.querySelector(&#x27;#mask&#x27;)</span><br><span class="hljs-string">        imgs.forEach((e, i) =&gt; &#123;</span><br><span class="hljs-string">            let url = imgList[i].url + &#x27;?&#x27; + new Date().getTime();</span><br><span class="hljs-string">            e.src = url;</span><br><span class="hljs-string">            e.onload = function () &#123;</span><br><span class="hljs-string">                flag++;</span><br><span class="hljs-string">                if(flag === <span class="hljs-subst">$&#123;router.imgList.length&#125;</span>)&#123;</span><br><span class="hljs-string">                    handleImgWidth();</span><br><span class="hljs-string">                    window.addEventListener(&quot;resize&quot;, handleImgWidth);</span><br><span class="hljs-string">                    mask.style.display = &#x27;none&#x27;</span><br><span class="hljs-string">                &#125;</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;)</span><br><span class="hljs-string">        function handleImgWidth() &#123;</span><br><span class="hljs-string">            let imgArr = document.querySelectorAll(&#x27;.content img&#x27;);</span><br><span class="hljs-string">            let clientWidth = document.querySelector(&#x27;.content&#x27;).clientWidth;</span><br><span class="hljs-string">            if (clientWidth &gt; 750) &#123;</span><br><span class="hljs-string">                for (let i = 0; i &lt; imgArr.length; i++) &#123;</span><br><span class="hljs-string">                    imgArr[i].style.width = &#x27;<span class="hljs-subst">$&#123;router.width&#125;</span>px&#x27;</span><br><span class="hljs-string">                &#125;</span><br><span class="hljs-string">            &#125; else &#123;</span><br><span class="hljs-string">                for (let i = 0; i &lt; imgArr.length; i++) &#123;</span><br><span class="hljs-string">                    imgArr[i].style.width = &#x27;100vw&#x27;</span><br><span class="hljs-string">                &#125;</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &lt;/script&gt;</span><br><span class="hljs-string">    <span class="hljs-subst">$&#123;router.script&#125;</span></span><br><span class="hljs-string">&lt;/body&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">&lt;/html&gt;</span><br><span class="hljs-string">    `</span><br>    <span class="hljs-title function_">mkdir</span>(filePath + <span class="hljs-string">&#x27;/index.html&#x27;</span>, fileContent)<br>&#125;);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mkdir</span>(<span class="hljs-params">filePath, data</span>) &#123;<br>    <span class="hljs-keyword">const</span> arr = filePath.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>);<br>    <span class="hljs-keyword">let</span> dir = arr[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt; arr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">if</span> (dir &amp;&amp; !dirCache[dir] &amp;&amp; !fs.<span class="hljs-title function_">existsSync</span>(dir)) &#123;<br>            dirCache[dir] = <span class="hljs-literal">true</span>;<br>            fs.<span class="hljs-title function_">mkdirSync</span>(dir);<br>        &#125;<br>        dir = dir + <span class="hljs-string">&#x27;/&#x27;</span> + arr[i];<br>    &#125;<br>    fs.<span class="hljs-title function_">writeFileSync</span>(filePath, data, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err)<br>    &#125;)<br>&#125;<br></code></pre>
-<pre class="highlight"><code class="hljs bash">$ <span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;node server/statusPage.js &amp;&amp; cross-env BASE_URL=&#x27;https://www.xxxxx.cn&#x27; nuxt build &quot;</span>,<br><br></code></pre>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/posts/0.html</url>
-    <content><![CDATA[<p>安装Flutter学习网站：<a href="https://flutter.cn/docs/get-started/install">Flutter安装文档</a></p>
-<h3 id="安装Flutter-SDK（全程以Mac为例）"><a href="#安装Flutter-SDK（全程以Mac为例）" class="headerlink" title="安装Flutter SDK（全程以Mac为例）"></a>安装Flutter SDK（全程以Mac为例）</h3><p>这里有两种方式进行安装，分别是使用安装包和使用git进行操作<br>:::info<br>方法一<br><a href="https://flutter.cn/docs/development/tools/sdk/releases">Flutter版本列表</a>在这里选择合适的版本进行下载<br>下载完成后解压并<br>方式二<br>找到自己准备存放Flutter的文件夹 并按照如下操作<br>:::</p>
-<pre class="highlight"><code class="hljs bash">// 开始下载<br>$ git <span class="hljs-built_in">clone</span> https://github.com/flutter/flutter.git -b stable<br></code></pre>
-<pre class="highlight"><code class="hljs bash">// 查询自己默认使用的哪个shell<br>$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br>// bash<br>$ vim ~/.bash_profile<br>// zsh<br>$ vim ~/.zshrc<br>// 添加镜像<br>$ <span class="hljs-built_in">export</span> PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub<br>$ <span class="hljs-built_in">export</span> FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter<br>$ <span class="hljs-built_in">export</span> FLUTTER=~/xxx // 自己文件位置 <br>$ <span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$FLUTTER</span>/bin:<span class="hljs-variable">$PATH</span><br>// 退出编辑 ⇧+q 并输入 wq！<br>// 重载命令<br>// bash<br>$ <span class="hljs-built_in">source</span> ~/.bash_profile<br>// zsh<br>$ <span class="hljs-built_in">source</span> ~/.zshrc<br>// flutter doctor命令来查看当前环境是否需要安装其他的依赖 全部都出现对钩就表明检查通过<br>$ flutter doctor<br></code></pre>
-<h3 id="检查时出现的问题"><a href="#检查时出现的问题" class="headerlink" title="检查时出现的问题"></a>检查时出现的问题</h3><ol>
-<li>Android Studio (not installed)<br>因为Flutter需要依赖Android Studio来为提供Android平台的支持，因此需要安装全量安装Android Studio，<a href="https://developer.android.google.cn/studio">Android Studio安装地址</a>，</li>
-<li>Android toolchain - develop for Android devices —–[X]<br>Unable to locate Android SDK.</li>
-</ol>
-<p>Install Android Studio from:<br><a href="https://developer.android.com/studio/index.html">https://developer.android.com/studio/index.html</a><br>On first launch it will assist you in installing the Android SDK<br>components.<br>(or visit <a href="https://flutter.dev/docs/get-started/install/macos#android-setup">https://flutter.dev/docs/get-started/install/macos#android-setup</a><br>for detailed instructions).<br>If the Android SDK has been installed to a custom location, please use<br><code>flutter config --android-sdk</code> to update to that location.<br><strong>打开下载的Android Studio 并点击Configure 选择SDK Manger 找到 Android SDK 复制其 Android SDK Location。打开命令行并执行 ： flutter config –android-sdk 复制的地址</strong><br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680701064513-79eeffb5-0276-4482-9eff-4a664a029c11.png#averageHue=%234f515e&clientId=u708b8274-f4c1-4&from=paste&height=310&id=ubc603d7a&name=image.png&originHeight=620&originWidth=1626&originalType=binary&ratio=2&rotation=0&showTitle=false&size=471532&status=done&style=none&taskId=ufcfac575-2689-4d05-8b20-ae83b3c2014&title=&width=813" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680701064513-79eeffb5-0276-4482-9eff-4a664a029c11.png#averageHue=%234f515e&clientId=u708b8274-f4c1-4&from=paste&height=310&id=ubc603d7a&name=image.png&originHeight=620&originWidth=1626&originalType=binary&ratio=2&rotation=0&showTitle=false&size=471532&status=done&style=none&taskId=ufcfac575-2689-4d05-8b20-ae83b3c2014&title=&width=813" class="lozad post-image"><br><strong>如果再次flutter doctor时还是有问题请检查</strong><br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680702481156-97a9b94c-0e5f-492e-b280-3d0216838548.png#averageHue=%233d4046&clientId=u708b8274-f4c1-4&from=paste&height=265&id=u581ca1aa&name=image.png&originHeight=530&originWidth=1644&originalType=binary&ratio=2&rotation=0&showTitle=false&size=152265&status=done&style=none&taskId=ued2a2fc9-5dda-4e43-822b-5aa7a5d6c2d&title=&width=822" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680702481156-97a9b94c-0e5f-492e-b280-3d0216838548.png#averageHue=%233d4046&clientId=u708b8274-f4c1-4&from=paste&height=265&id=u581ca1aa&name=image.png&originHeight=530&originWidth=1644&originalType=binary&ratio=2&rotation=0&showTitle=false&size=152265&status=done&style=none&taskId=ued2a2fc9-5dda-4e43-822b-5aa7a5d6c2d&title=&width=822" class="lozad post-image"></p>
-<ol start="3">
-<li>Android toolchain - develop for Android devices (Android SDK version 33.0.2)<br>Some Android licenses not accepted. To resolve this, run: flutter doctor–android-licenses</li>
-</ol>
-<p><strong>这是有些许可还没开启因此只需要执行：flutter doctor –android-licenses</strong></p>
-<ol start="4">
-<li>Xcode (not installed)<br>同样是需要安装Xcode为其提供iOS方面的支持，<a href="https://developer.apple.com/xcode/">下载地址</a></li>
-<li>Xcode - develop for iOS and macOS (Xcode 13.1)</li>
-</ol>
-<p>“✗ CocoaPods not installed.”<br><strong>十分明确未安装CocoaPods，执行：brew install cocoapods</strong><br>最终检查结果为如下所示即为全部安装成功，除了Flutter是必须得，其他看自己项目将要打包成什么项目进行选择安装，并不是必须的。<br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680705825519-95fff26c-a0aa-43e2-b750-3440ae2c7300.png#averageHue=%23f1f1f0&clientId=u708b8274-f4c1-4&from=paste&height=192&id=ua8208f34&name=image.png&originHeight=384&originWidth=1024&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218444&status=done&style=none&taskId=u8e7dc8e1-c960-4141-bd67-35be10a41b6&title=&width=512" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680705825519-95fff26c-a0aa-43e2-b750-3440ae2c7300.png#averageHue=%23f1f1f0&clientId=u708b8274-f4c1-4&from=paste&height=192&id=ua8208f34&name=image.png&originHeight=384&originWidth=1024&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218444&status=done&style=none&taskId=u8e7dc8e1-c960-4141-bd67-35be10a41b6&title=&width=512" class="lozad post-image"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/posts/0.html</url>
-    <content><![CDATA[<h2 id="第一步：搭建环境"><a href="#第一步：搭建环境" class="headerlink" title="第一步：搭建环境"></a>第一步：搭建环境</h2><p>在开始搭建第一个Flutter应用之前，还需要在电脑里安装Flutter环境，如果还未搭建环境请先移步<a href="https://www.yuque.com/lizili-nuugy/uzacp0/wi9w9gkqhyfmzqms">这里</a>。如果环境已安装完毕，那就可以开始，</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="个人学习成长之路">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>个人博客</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="个人博客">
+    
+    
+      <meta 
+        property="og:url" 
+        content="https://www.liyueer.cn/posts/0.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://www.liyueer.cn/img/1.png">
+    
+    
+      <meta 
+        property="og:img" 
+        content="个人学习成长之路">
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-04-07">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-04-07">
+      <meta 
+        property="og:article:author" 
+        content="李自力">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+    
+    <link rel="prefetch" href="//unpkg.com/valine/dist/Valine.min.js" as="script">
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">个人博客</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          首页
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          归档
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          标签
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          分类
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          关于
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          友链
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://www.liyueer.cn/img/1.png" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">李自力</p>
+<p class="author-description">个人学习之路</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>4</span>
+    <span>文章</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>分类</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">第一步：搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="toc-text">第二步：创建应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BA%86%E8%A7%A3%E6%96%87%E4%BB%B6"><span class="toc-text">第三步：了解文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-yaml"><span class="toc-text">pubspec.yaml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-lock"><span class="toc-text">pubspec.lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios-x2F-android-x2F-web-x2F-windows-x2F-macos-x2F-linux"><span class="toc-text">ios&#x2F;android&#x2F;web&#x2F;windows&#x2F;macos&#x2F;linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib"><span class="toc-text">lib</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9AFlutter-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-text">第四步：Flutter 架构概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework%E6%A1%86%E6%9E%B6%E5%B1%82"><span class="toc-text">Framework框架层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Engine%E5%BC%95%E6%93%8E%E5%B1%82"><span class="toc-text">Engine引擎层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Embrdder%E5%B5%8C%E5%85%A5%E5%B1%82"><span class="toc-text">Embrdder嵌入层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D"><span class="toc-text">第五步：语言介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin"><span class="toc-text">mixin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5"><span class="toc-text">异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stream"><span class="toc-text">Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%88%A9"><span class="toc-text">安利</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AE%9E%E6%88%98"><span class="toc-text">第四步：实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%85%A5%E5%8F%A3"><span class="toc-text">主入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="toc-text">列表页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EwebView%E8%AF%A6%E6%83%85"><span class="toc-text">基于webView详情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%95%B0%E6%8D%AE"><span class="toc-text">请求及数据</span></a></li></ol></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>分类
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>热门标签
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-04-07T03:25:46.303Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-04-07</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>4k 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h2 id="第一步：搭建环境"><a href="#第一步：搭建环境" class="headerlink" title="第一步：搭建环境"></a>第一步：搭建环境</h2><p>在开始搭建第一个Flutter应用之前，还需要在电脑里安装Flutter环境，如果还未搭建环境请先移步<a target="_blank" rel="noopener" href="https://www.yuque.com/lizili-nuugy/uzacp0/wi9w9gkqhyfmzqms">这里</a>。如果环境已安装完毕，那就可以开始，</p>
 <h2 id="第二步：创建应用"><a href="#第二步：创建应用" class="headerlink" title="第二步：创建应用"></a>第二步：创建应用</h2><p>首先找到即将使用的文件夹并在当前文件夹打开命令行 flutter create 项目名称如图一<br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708104712-92eb1747-4eab-4fcd-917a-65a4a7d0683e.png#averageHue=%23f7f7f6&clientId=u030161f4-ca59-4&from=paste&height=310&id=u64205e39&name=image.png&originHeight=1234&originWidth=1058&originalType=binary&ratio=2&rotation=0&showTitle=true&size=579264&status=done&style=none&taskId=u9eef0d84-da7a-4b88-a25e-b2305e0e31e&title=%E5%9B%BE%E4%B8%80&width=266" alt="image.png" title="图一" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708104712-92eb1747-4eab-4fcd-917a-65a4a7d0683e.png#averageHue=%23f7f7f6&clientId=u030161f4-ca59-4&from=paste&height=310&id=u64205e39&name=image.png&originHeight=1234&originWidth=1058&originalType=binary&ratio=2&rotation=0&showTitle=true&size=579264&status=done&style=none&taskId=u9eef0d84-da7a-4b88-a25e-b2305e0e31e&title=%E5%9B%BE%E4%B8%80&width=266" class="lozad post-image"><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708294450-ddc597fe-d5b2-40ad-826b-ab6ded77156e.png#averageHue=%23f9f9f9&clientId=u030161f4-ca59-4&from=paste&height=309&id=ud59f23fa&name=image.png&originHeight=1770&originWidth=978&originalType=binary&ratio=2&rotation=0&showTitle=true&size=72673&status=done&style=none&taskId=ud9923ad5-b863-4f18-87b8-aca1906af32&title=%E5%9B%BE%E4%BA%8C&width=171" alt="image.png" title="图二" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708294450-ddc597fe-d5b2-40ad-826b-ab6ded77156e.png#averageHue=%23f9f9f9&clientId=u030161f4-ca59-4&from=paste&height=309&id=ud59f23fa&name=image.png&originHeight=1770&originWidth=978&originalType=binary&ratio=2&rotation=0&showTitle=true&size=72673&status=done&style=none&taskId=ud9923ad5-b863-4f18-87b8-aca1906af32&title=%E5%9B%BE%E4%BA%8C&width=171" class="lozad post-image"><br>创建完成后按照下面的命令执行即可进入该项目中运行如图二</p>
 <h2 id="第三步：了解文件"><a href="#第三步：了解文件" class="headerlink" title="第三步：了解文件"></a>第三步：了解文件</h2><p>完成到这里就可以开始后面定制化的开发了，再次之前可以对每个文件夹进行介绍一下，方便后期开发<br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708461836-b8574456-a03d-4354-9c93-18345e8b421d.png#averageHue=%2325272a&clientId=u030161f4-ca59-4&from=paste&height=407&id=uf888b3d3&name=image.png&originHeight=814&originWidth=568&originalType=binary&ratio=2&rotation=0&showTitle=false&size=66414&status=done&style=none&taskId=u5ad4a3c6-9cea-4792-befd-9dbd921fdd7&title=&width=284" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680708461836-b8574456-a03d-4354-9c93-18345e8b421d.png#averageHue=%2325272a&clientId=u030161f4-ca59-4&from=paste&height=407&id=uf888b3d3&name=image.png&originHeight=814&originWidth=568&originalType=binary&ratio=2&rotation=0&showTitle=false&size=66414&status=done&style=none&taskId=u5ad4a3c6-9cea-4792-befd-9dbd921fdd7&title=&width=284" class="lozad post-image"></p>
 <h3 id="pubspec-yaml"><a href="#pubspec-yaml" class="headerlink" title="pubspec.yaml"></a>pubspec.yaml</h3><h3 id="pubspec-lock"><a href="#pubspec-lock" class="headerlink" title="pubspec.lock"></a>pubspec.lock</h3><p>与vue一样，是依赖版本锁</p>
@@ -50,7 +397,7 @@
 <h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><p>mixin 可以实现类似多重继承的功能，但是实际上和多重继承又不一样。多重继承中相同的函数执行并不会存在 ”父子“ 关系，mixin还可以抽象和重用一系列特性，mixin实际上实现了一条继承链声明，mixin 的顺序代表了继承链的继承顺序，声明在后面的 mixin，一般会最先执行</p>
 <h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>Future使用Future对象封装了Dart 的异步操作，在定义时进行声明即可，开箱即用。</p>
 <h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p>Stream 是一系列异步事件的序列。其类似于一个异步的 Iterable，不同的是当你向 Iterable 获取下一个事件时它会立即给你，但是 Stream 则不会立即给你而是在它准备好时告诉你。Stream 提供一个异步的数据序列。数据序列包括用户生成的事件和从文件读取的数据。你可以使用 Stream API 中的 listen() 方法和 await for 关键字来处理一个 Stream。当出现错误时，Stream 提供一种处理错误的方式。Stream 有两种类型：Single-Subscription 和 Broadcast</p>
-<h3 id="安利"><a href="#安利" class="headerlink" title="安利"></a>安利</h3><p>为了减少学习成本，这里推荐一下<a href="https://openkraken.com/guide">Kraken</a>，使用它就是做了个桥接层，让我们使用前端技术进行Flutter开发了。</p>
+<h3 id="安利"><a href="#安利" class="headerlink" title="安利"></a>安利</h3><p>为了减少学习成本，这里推荐一下<a target="_blank" rel="noopener" href="https://openkraken.com/guide">Kraken</a>，使用它就是做了个桥接层，让我们使用前端技术进行Flutter开发了。</p>
 <h2 id="第四步：实战"><a href="#第四步：实战" class="headerlink" title="第四步：实战"></a>第四步：实战</h2><p> 、</p>
 <p>因为Flutter本就是支持多运用的，因此本次案例选择Chrome来运行查看效果，这样可以快速的运行并查看效果。Flutter是支持热更新的，但是在第一次使用VScode开发Flutter时，有可能VScode可能配置并没有开启，因此需要再设置中进行配置并重载，如图1，再次运行后就可以支持Flutter的热更新了。<br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680795305231-7fc77ac5-6890-4e33-a8cb-0c49ed5a4bcd.png#averageHue=%232b2b2b&clientId=ud048ed5b-f283-4&from=paste&height=334&id=ud008bf8a&name=image.png&originHeight=912&originWidth=1092&originalType=binary&ratio=2&rotation=0&showTitle=false&size=120205&status=done&style=none&taskId=ue6fc0743-d9b2-4196-9e2b-6d5e103e4df&title=&width=400" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680795305231-7fc77ac5-6890-4e33-a8cb-0c49ed5a4bcd.png#averageHue=%232b2b2b&clientId=ud048ed5b-f283-4&from=paste&height=334&id=ud008bf8a&name=image.png&originHeight=912&originWidth=1092&originalType=binary&ratio=2&rotation=0&showTitle=false&size=120205&status=done&style=none&taskId=ue6fc0743-d9b2-4196-9e2b-6d5e103e4df&title=&width=400" class="lozad post-image"><br>开始码代码，下面是lib下main.dart的代码我在下面进行注释，大致了解一下这里每一个方法的作用</p>
 <pre class="highlight"><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">void</span> main() &#123; <span class="hljs-comment">// main函数就是入口函数</span><br>  runApp(<span class="hljs-keyword">const</span> MyApp()); <span class="hljs-comment">// MyApp 这里就是下面创建的根组件，runApp就是flutter程序入口，传入的Widget即是我们需要显示的界面Widget，widget就类似于前端的组件</span><br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123; <span class="hljs-comment">// MyApp继承了无状态的Widget，表示是纯UI组件</span><br>  <span class="hljs-keyword">const</span> MyApp(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-comment">// This widget is the root of your application.</span><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123; <span class="hljs-comment">// build 就相当于Render函数</span><br>    <span class="hljs-keyword">return</span> MaterialApp( <span class="hljs-comment">// 表述整个页面的布局</span><br>      title: <span class="hljs-string">&#x27;Flutter Demo&#x27;</span>, <span class="hljs-comment">// 这里就是APP名称</span><br>      theme: ThemeData( <span class="hljs-comment">// 使用主题</span><br>        <span class="hljs-comment">// This is the theme of your application.</span><br>        <span class="hljs-comment">//</span><br>        <span class="hljs-comment">// Try running your application with &quot;flutter run&quot;. You&#x27;ll see the</span><br>        <span class="hljs-comment">// application has a blue toolbar. Then, without quitting the app, try</span><br>        <span class="hljs-comment">// changing the primarySwatch below to Colors.green and then invoke</span><br>        <span class="hljs-comment">// &quot;hot reload&quot; (press &quot;r&quot; in the console where you ran &quot;flutter run&quot;,</span><br>        <span class="hljs-comment">// or simply save your changes to &quot;hot reload&quot; in a Flutter IDE).</span><br>        <span class="hljs-comment">// Notice that the counter didn&#x27;t reset back to zero; the application</span><br>        <span class="hljs-comment">// is not restarted.</span><br>        primarySwatch: Colors.blue, <span class="hljs-comment">// 主题颜色是蓝色</span><br>      ),<br>      home: <span class="hljs-keyword">const</span> MyHomePage(title: <span class="hljs-string">&#x27;Frist Flutter!&#x27;</span>), <span class="hljs-comment">// 内容区域 这里定义了一个MyHomePage的类传参为title 这一块就是图1里面的内容</span><br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyHomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123; <span class="hljs-comment">// 创建MyHomePageWidget，继承与有状态Widget</span><br>  <span class="hljs-keyword">const</span> MyHomePage(&#123;<span class="hljs-keyword">super</span>.key, <span class="hljs-keyword">required</span> <span class="hljs-keyword">this</span>.title&#125;); <span class="hljs-comment">// 接收参数 required表示必传，</span><br><br>  <span class="hljs-comment">// This widget is the home page of your application. It is stateful, meaning</span><br>  <span class="hljs-comment">// that it has a State object (defined below) that contains fields that affect</span><br>  <span class="hljs-comment">// how it looks.</span><br><br>  <span class="hljs-comment">// This class is the configuration for the state. It holds the values (in this</span><br>  <span class="hljs-comment">// case the title) provided by the parent (in this case the App widget) and</span><br>  <span class="hljs-comment">// used by the build method of the State. Fields in a Widget subclass are</span><br>  <span class="hljs-comment">// always marked &quot;final&quot;.</span><br><br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">String</span> title;<br><br>  <span class="hljs-meta">@override</span><br>  State&lt;MyHomePage&gt; createState() =&gt; _MyHomePageState(); <span class="hljs-comment">// 创建一个state进行管理计数器部分</span><br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_MyHomePageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">MyHomePage</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">int</span> _counter = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-keyword">void</span> _incrementCounter() &#123; <span class="hljs-comment">// 定义一个方法</span><br>    setState(() &#123;<br>      <span class="hljs-comment">// This call to setState tells the Flutter framework that something has</span><br>      <span class="hljs-comment">// changed in this State, which causes it to rerun the build method below</span><br>      <span class="hljs-comment">// so that the display can reflect the updated values. If we changed</span><br>      <span class="hljs-comment">// _counter without calling setState(), then the build method would not be</span><br>      <span class="hljs-comment">// called again, and so nothing would appear to happen.</span><br>      _counter++;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-comment">// This method is rerun every time setState is called, for instance as done</span><br>    <span class="hljs-comment">// by the _incrementCounter method above.</span><br>    <span class="hljs-comment">//</span><br>    <span class="hljs-comment">// The Flutter framework has been optimized to make rerunning build methods</span><br>    <span class="hljs-comment">// fast, so that you can just rebuild anything that needs updating rather</span><br>    <span class="hljs-comment">// than having to individually change instances of widgets.</span><br>    <span class="hljs-keyword">return</span> Scaffold( <span class="hljs-comment">// 表示是一个容器</span><br>      appBar: AppBar( <span class="hljs-comment">// 这里创建一个头部，如图3</span><br>        <span class="hljs-comment">// Here we take the value from the MyHomePage object that was created by</span><br>        <span class="hljs-comment">// the App.build method, and use it to set our appbar title.</span><br>        title: Text(widget.title),<br>      ),<br>      body: Center( <span class="hljs-comment">// 这里表述body是一个用居中容器包裹的，只能接受一个组件，放在child上</span><br>        <span class="hljs-comment">// Center is a layout widget. It takes a single child and positions it</span><br>        <span class="hljs-comment">// in the middle of the parent.</span><br>        child: Column( <span class="hljs-comment">// 创建一行，可以接受多个组件，放在children中</span><br>          <span class="hljs-comment">// Column is also a layout widget. It takes a list of children and</span><br>          <span class="hljs-comment">// arranges them vertically. By default, it sizes itself to fit its</span><br>          <span class="hljs-comment">// children horizontally, and tries to be as tall as its parent.</span><br>          <span class="hljs-comment">//</span><br>          <span class="hljs-comment">// Invoke &quot;debug painting&quot; (press &quot;p&quot; in the console, choose the</span><br>          <span class="hljs-comment">// &quot;Toggle Debug Paint&quot; action from the Flutter Inspector in Android</span><br>          <span class="hljs-comment">// Studio, or the &quot;Toggle Debug Paint&quot; command in Visual Studio Code)</span><br>          <span class="hljs-comment">// to see the wireframe for each widget.</span><br>          <span class="hljs-comment">//</span><br>          <span class="hljs-comment">// Column has various properties to control how it sizes itself and</span><br>          <span class="hljs-comment">// how it positions its children. Here we use mainAxisAlignment to</span><br>          <span class="hljs-comment">// center the children vertically; the main axis here is the vertical</span><br>          <span class="hljs-comment">// axis because Columns are vertical (the cross axis would be</span><br>          <span class="hljs-comment">// horizontal).</span><br>          mainAxisAlignment: MainAxisAlignment.center, <span class="hljs-comment">// 纵向排列方式，这里使用的是居中</span><br>          children: &lt;Widget&gt;[ <span class="hljs-comment">// 表示这个数组是一个组件数组</span><br>            <span class="hljs-keyword">const</span> Text( <span class="hljs-comment">// 这是创建一个文本</span><br>              <span class="hljs-string">&#x27;You have pushed the button this many times:&#x27;</span>,<br>            ),<br>            Text( <span class="hljs-comment">//</span><br>              <span class="hljs-string">&#x27;<span class="hljs-subst">$_counter</span>&#x27;</span>, <span class="hljs-comment">// 使用$ 接受一个变量</span><br>              style: Theme.of(context).textTheme.headlineMedium, <span class="hljs-comment">// 设置文本样式</span><br>            ),<br>          ],<br>        ),<br>      ),<br>      floatingActionButton: FloatingActionButton( <span class="hljs-comment">// 创建一个浮动的按钮</span><br>        onPressed: _incrementCounter, <span class="hljs-comment">// 相当于点击事件，</span><br>        tooltip: <span class="hljs-string">&#x27;Increment&#x27;</span>, <span class="hljs-comment">// 长按提示内容，Web中效果是鼠标移入提示</span><br>        child: <span class="hljs-keyword">const</span> Icon(Icons.add), <span class="hljs-comment">// 按钮接受一个组件 这里直接创建一个icon </span><br>      ), <span class="hljs-comment">// This trailing comma makes auto-formatting nicer for build methods.</span><br>    );<br>  &#125;<br>&#125;<br><br></code></pre>
@@ -61,21 +408,312 @@
 <h3 id="列表页面"><a href="#列表页面" class="headerlink" title="列表页面"></a>列表页面</h3><pre class="highlight"><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/api/Apis.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/events/BeanEvent.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/constants/Constants.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/models/local/Channel.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/models/network/NewsList.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/pages/NewsDetailPage.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NewsListWidget</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> Channel channel;<br>  NewsListWidget(&#123;Key key, <span class="hljs-keyword">this</span>.channel&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  _NewsListState createState() =&gt; _NewsListState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_NewsListState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">NewsListWidget</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">with</span> <span class="hljs-title">AutomaticKeepAliveClientMixin</span> </span>&#123;<br>  <span class="hljs-comment">//当前页</span><br>  <span class="hljs-built_in">int</span> _page = <span class="hljs-number">0</span>;<br>  <span class="hljs-comment">//网络请求接口</span><br>  API$Neteast _api;<br>  <span class="hljs-comment">//该频道下的所有新闻数据</span><br>  <span class="hljs-built_in">List</span>&lt;News&gt; _datas;<br>  ScrollController _listController;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-built_in">bool</span> <span class="hljs-keyword">get</span> wantKeepAlive =&gt; <span class="hljs-keyword">true</span>;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> initState() &#123;<br>    <span class="hljs-keyword">super</span>.initState();<br>    _api = API$Neteast();<br>    _datas = [];<br>    _listController = ScrollController();<br>    _listController.addListener(() &#123;<br>      <span class="hljs-keyword">var</span> maxScroll = _listController.position.maxScrollExtent;<br>      <span class="hljs-keyword">var</span> pixels = _listController.position.pixels;<br>      <span class="hljs-keyword">if</span> (maxScroll == pixels) &#123;<br>        _page += <span class="hljs-number">20</span>;<br>        _getNewsList();<br>      &#125;<br>    &#125;);<br><br>    Constants.eventBus.<span class="hljs-keyword">on</span>&lt;BeanEvent&lt;NewsList&gt;&gt;().listen((event) &#123;<br>      <span class="hljs-keyword">if</span> (widget.channel.channelId == event.id) &#123;<br>        setState(() &#123;<br>          NewsList data = event.data;<br>          _datas.addAll(data.datas);<br>        &#125;);<br>      &#125;<br>    &#125;);<br>    _getNewsList();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> dispose() &#123;<br>    _listController.dispose();<br>    <span class="hljs-keyword">super</span>.dispose();<br>  &#125;<br><br>  Future&lt;<span class="hljs-built_in">Null</span>&gt; _pullToRefresh() <span class="hljs-keyword">async</span> &#123;<br>    _page = <span class="hljs-number">0</span>;<br>    _datas.clear();<br>    _getNewsList();<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>  &#125;<br><br>  _getNewsList() &#123;<br>    _api.getNewsList(<br>        widget.channel.channelType, widget.channel.channelId, _page);<br>  &#125;<br><br>  _onItemClick(<span class="hljs-built_in">int</span> position, News data) &#123;<br>    <span class="hljs-keyword">if</span> (data.url == <span class="hljs-keyword">null</span> || data.url.isEmpty) &#123;<br>      Scaffold.of(context).showSnackBar(SnackBar(<br>        content: <span class="hljs-keyword">new</span> Text(<span class="hljs-string">&#x27;缺少新闻链接&#x27;</span>),<br>        duration: <span class="hljs-built_in">Duration</span>(seconds: <span class="hljs-number">1</span>),<br>      ));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      Navigator.of(context).push(MaterialPageRoute(<br>          builder: (ctx) =&gt; NewsDetailPage(<br>                postId: data.postid,<br>                url: data.url,<br>                title: <span class="hljs-string">&quot;&quot;</span>,<br>              )));<br>    &#125;<br>  &#125;<br><br>  Widget _renderRow(<span class="hljs-built_in">int</span> position) &#123;<br>    <span class="hljs-keyword">if</span> (position.isOdd) <span class="hljs-keyword">return</span> Divider();<br><br>    <span class="hljs-keyword">final</span> index = position ~/ <span class="hljs-number">2</span>;<br>    News data = _datas[index];<br><br>    <span class="hljs-keyword">return</span> Card(<br>      color: Colors.grey[<span class="hljs-number">250</span>],<br>      elevation: <span class="hljs-number">5.0</span>,<br>      child: InkWell(<br>        child: <span class="hljs-keyword">new</span> Column(<br>          crossAxisAlignment: CrossAxisAlignment.start,<br>          children: [<br>            Image.network(data.imgsrc, fit: BoxFit.fitWidth),<br>            Padding(<br>              padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">10.0</span>),<br>              child: Text(<br>                data.title,<br>                style: TextStyle(<br>                  fontSize: <span class="hljs-number">16.0</span>,<br>                  fontWeight: FontWeight.bold,<br>                ),<br>              ),<br>            ),<br>            Padding(<br>              padding: data.digest.isEmpty<br>                  ? <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">0.0</span>)<br>                  : <span class="hljs-keyword">const</span> EdgeInsets.only(<br>                      left: <span class="hljs-number">10.0</span>, right: <span class="hljs-number">10.0</span>, bottom: <span class="hljs-number">10.0</span>),<br>              child: Text(<br>                data.digest,<br>                style: TextStyle(<br>                  fontSize: <span class="hljs-number">12.0</span>,<br>                ),<br>              ),<br>            ),<br>            Padding(<br>              padding: <span class="hljs-keyword">const</span> EdgeInsets.only(left: <span class="hljs-number">10.0</span>, right: <span class="hljs-number">10.0</span>),<br>              child: Text(<br>                <span class="hljs-string">&#x27;时间：<span class="hljs-subst">$&#123;data.ptime&#125;</span>&#x27;</span>,<br>                style: TextStyle(<br>                  fontSize: <span class="hljs-number">12.0</span>,<br>                ),<br>              ),<br>            ),<br>            Padding(<br>              padding:<br>                  <span class="hljs-keyword">const</span> EdgeInsets.only(left: <span class="hljs-number">10.0</span>, right: <span class="hljs-number">10.0</span>, bottom: <span class="hljs-number">10.0</span>),<br>              child: Text(<br>                <span class="hljs-string">&#x27;来源：<span class="hljs-subst">$&#123;data.source&#125;</span>&#x27;</span>,<br>                style: TextStyle(<br>                  fontSize: <span class="hljs-number">12.0</span>,<br>                ),<br>              ),<br>            )<br>          ],<br>        ),<br>        onTap: () &#123;<br>          _onItemClick(index, data);<br>        &#125;,<br>      ),<br>    );<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">if</span> (_datas == <span class="hljs-keyword">null</span> || _datas.isEmpty) &#123;<br>      <span class="hljs-keyword">return</span> Center(child: CircularProgressIndicator());<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      Widget listView = ListView.builder(<br>        padding: EdgeInsets.all(<span class="hljs-number">10.0</span>),<br>        itemCount: _datas.length * <span class="hljs-number">2</span>,<br>        itemBuilder: (context, i) =&gt; _renderRow(i),<br>        controller: _listController,<br>      );<br>      <span class="hljs-keyword">return</span> RefreshIndicator(child: listView, onRefresh: _pullToRefresh);<br>    &#125;<br>  &#125;<br>&#125;<br><br></code></pre>
 <h3 id="基于webView详情"><a href="#基于webView详情" class="headerlink" title="基于webView详情"></a>基于webView详情</h3><pre class="highlight"><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/cupertino.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/constants/constants.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_webview_plugin/flutter_webview_plugin.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NewsDetailPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">String</span> url;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">String</span> title;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">String</span> postId;<br><br>  <span class="hljs-keyword">const</span> NewsDetailPage(&#123;Key key, <span class="hljs-keyword">this</span>.postId, <span class="hljs-keyword">this</span>.url, <span class="hljs-keyword">this</span>.title&#125;)<br>      : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  State&lt;StatefulWidget&gt; createState() =&gt; NewsDetailPageState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NewsDetailPageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">NewsDetailPage</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">bool</span> loaded = <span class="hljs-keyword">false</span>;<br>  <span class="hljs-built_in">String</span> detailDataStr;<br>  <span class="hljs-keyword">final</span> flutterWebViewPlugin = FlutterWebviewPlugin();<br><br>  NewsDetailPageState(&#123;Key key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> initState() &#123;<br>    <span class="hljs-keyword">super</span>.initState();<br>    flutterWebViewPlugin.onStateChanged.listen((state) &#123;<br>      <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;state: <span class="hljs-subst">$&#123;state.type&#125;</span>&quot;</span>);<br>      <span class="hljs-keyword">if</span> (state.type == WebViewState.finishLoad) &#123;<br>        setState(() &#123;<br>          loaded = <span class="hljs-keyword">true</span>;<br>        &#125;);<br>      &#125;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-built_in">List</span>&lt;Widget&gt; titleContent = [];<br>    titleContent.add(Text(<br>        widget.title == <span class="hljs-keyword">null</span> || widget.title.isEmpty<br>            ? Strings.newsDetail<br>            : widget.title,<br>        style: TextStyle(color: Colors.white)));<br>    <span class="hljs-keyword">if</span> (!loaded) &#123;<br>      titleContent.add(CupertinoActivityIndicator());<br>    &#125;<br>    titleContent.add(Container(width: <span class="hljs-number">50.0</span>));<br>    <span class="hljs-keyword">return</span> WebviewScaffold(<br>      url: widget.url,<br>      appBar: AppBar(<br>        title: Row(<br>          mainAxisAlignment: MainAxisAlignment.center,<br>          children: titleContent,<br>        ),<br>        iconTheme: IconThemeData(color: Colors.white),<br>      ),<br>      withZoom: <span class="hljs-keyword">false</span>,<br>      withLocalStorage: <span class="hljs-keyword">true</span>,<br>      withJavascript: <span class="hljs-keyword">true</span>,<br>    );<br>  &#125;<br>&#125;<br><br></code></pre>
 <h3 id="请求及数据"><a href="#请求及数据" class="headerlink" title="请求及数据"></a>请求及数据</h3><pre class="highlight"><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_news/constants/Constants.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:http/http.dart&#x27;</span> <span class="hljs-keyword">as</span> http;<br><span class="hljs-comment">// 使用网上公共接口</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NetWork</span> </span>&#123;<br>  <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> _debug = <span class="hljs-keyword">true</span>;<br>  <span class="hljs-comment">//网易新闻的host</span><br>  <span class="hljs-keyword">static</span> <span class="hljs-built_in">String</span> NETEAST_HOST = <span class="hljs-string">&quot;https://c.m.163.com/&quot;</span>;<br><br>  <span class="hljs-keyword">static</span> <span class="hljs-built_in">String</span> getHost(<span class="hljs-built_in">int</span> type) &#123;<br>    <span class="hljs-keyword">switch</span> (type) &#123;<br>      <span class="hljs-keyword">case</span> Constants.TYPE_NET_NETEASE_NEWS:<br>        <span class="hljs-keyword">return</span> NETEAST_HOST;<br><br>      <span class="hljs-keyword">default</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">/* 基础GET请求 */</span><br>  <span class="hljs-keyword">static</span> Future&lt;<span class="hljs-built_in">String</span>&gt; <span class="hljs-keyword">get</span>(<span class="hljs-built_in">String</span> url, &#123;<span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; params&#125;) <span class="hljs-keyword">async</span> &#123;<br>    <span class="hljs-keyword">if</span> (params != <span class="hljs-keyword">null</span> &amp;&amp; params.isNotEmpty) &#123;<br>      <span class="hljs-built_in">StringBuffer</span> sb = <span class="hljs-built_in">StringBuffer</span>(<span class="hljs-string">&quot;?&quot;</span>);<br>      params.forEach((key, value) &#123;<br>        sb.write(<span class="hljs-string">&quot;<span class="hljs-subst">$key</span>&quot;</span> + <span class="hljs-string">&quot;=&quot;</span> + <span class="hljs-string">&quot;<span class="hljs-subst">$value</span>&quot;</span> + <span class="hljs-string">&quot;&amp;&quot;</span>);<br>      &#125;);<br>      <span class="hljs-built_in">String</span> paramStr = sb.toString();<br>      paramStr = paramStr.substring(<span class="hljs-number">0</span>, paramStr.length - <span class="hljs-number">1</span>);<br>      url += paramStr;<br>    &#125;<br>    http.Response res = <span class="hljs-keyword">await</span> http.<span class="hljs-keyword">get</span>(url, headers: getCommonHeader());<br>    <span class="hljs-keyword">if</span> (_debug) &#123;<br>      <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发起Get请求_____<span class="hljs-subst">$url</span>|________________<span class="hljs-subst">$&#123;res.body&#125;</span>|&#x27;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> res.body;<br>  &#125;<br><br><span class="hljs-comment">/* 基础POST请求 */</span><br>  <span class="hljs-keyword">static</span> Future&lt;<span class="hljs-built_in">String</span>&gt; post(<span class="hljs-built_in">String</span> url, &#123;<span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; params&#125;) <span class="hljs-keyword">async</span> &#123;<br>    http.Response res =<br>        <span class="hljs-keyword">await</span> http.post(url, body: params, headers: getCommonHeader());<br>    <span class="hljs-keyword">if</span> (_debug) &#123;<br>      <span class="hljs-built_in">print</span>(<br>          <span class="hljs-string">&#x27;|发起Post请求|_______|<span class="hljs-subst">$url</span>|______|<span class="hljs-subst">$&#123;params.toString()&#125;</span>|________|<span class="hljs-subst">$&#123;res.body&#125;</span>|&#x27;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> res.body;<br>  &#125;<br><br>  <span class="hljs-keyword">static</span> <span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; getCommonHeader() &#123;<br>    <span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; header = <span class="hljs-built_in">Map</span>();<br>    header[<span class="hljs-string">&#x27;User-Agent&#x27;</span>] =<br>        <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36&#x27;</span>;<br>    <span class="hljs-keyword">return</span> header;<br>  &#125;<br>&#125;<br><br></code></pre>
-<p><a href="https://github.com/lizil-git/flutter_news.git">源码获取地址</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>包管理器命令</title>
-    <url>/posts/187a3295.html</url>
-    <content><![CDATA[<p>记录一下各种开发中能够用到的工具命令,方便快速查询到一些常用命令</p>
-<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><div class="post-note note-info"><p>设置包下载源：yarn config set npmRegistryServer<br>查看当前包下载源：yarn config get registry<br>自动安装最新版本，会覆盖指定版本号：yarn add [package]<br>一次性添加多个包：yarn add [package] [package] [package]<br>添加指定版本的包：yarn add [package]@[version]<br>安装某个tag：yarn add [package]@[tag]<br>添加到devDependencies：–dev，-D<br>添加到peerDependencies：–peer， -P<br>添加到optionalDependencies：–optional，-O<br>升级到最新版本：yarn upgrade [package]<br>升级到指定版本：yarn upgrade [package]@[version]<br>升级到指定tag：yarn upgrade [package]@[tag]<br>移除包：yarn remove [package]<br>安装所有依赖： yarn，yarn install<br>安装一个包的单一版本：yarn install –flat<br>强制重新下载所有包：yarn install –force<br>只安装生产环境依赖：yarn install –production<br>可以用来查看某个模块的最新版本信息：yarn info [package]<br>列出已缓存的每个包：yarn cache list<br>返回全局缓存位置：yarn cache dir<br>清除缓存：yarn cache clean </p></div>
-<h2 id="yrm"><a href="#yrm" class="headerlink" title="yrm"></a>yrm</h2><div class="post-note note-info"><p>yrm 是一个 yarn源管理器，可以快速地在源间切换<br>查看已有源：yrm ls<br>使用xxx镜像源： yrm use xxx<br>增加一个源：yrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除源: yrm del &lt;源名称&gt;<br>测试xx镜像源访问速度：yrm test taobao<br>查看npm当前镜像源：npm config get registry<br>查看yarn当前镜像源：yarn config get registry </p></div>
-<h2 id="npm、cnpm"><a href="#npm、cnpm" class="headerlink" title="npm、cnpm"></a>npm、cnpm</h2><div class="post-note note-info"><p>设置包下载源：npm config set registry<br>获取包下载源：npm config get registry<br>安装所有依赖: npm install，npm i<br>安装到全局目录里：-g，–global<br>添加到dependencies：-S，–save<br>添加到devDependencies-D，–save-dev<br>卸载依赖，不卸载package.json的对应信息：npm uninstall [package]<br>卸载全局模块：npm uninstall [package] -g<br>卸载依赖，不卸载package.json中的dependencies对应信息：npm uninstall [package] –save<br>卸载依赖，同时package.json中的devDependencies对应信息：npm uninstall [package] –save-dev<br>更新最新版本:npm update [package]<br>更新到指定版本号:npm update [package]@[version]<br>更新到最后一个新版本:npm install [package]@latest<br>查看项目中模块所在的目录：npm root<br>查看全局安装的模块所在目录：npm root -g<br>查看本地已安装模块的清单列表:npm list， npm ls<br>查看某个包对于各种包的依赖关系：npm view [version] dependencies<br>查看[package]最新的版本号：npm view [package] version<br>查看所有[package]历史版本号：npm view [package] versions<br>查看最新的[package]版本的信息：npm view [package]<br>查看[package]的详细信息：npm info [package]<br>查看本地已安装的[package]的详细信息：npm list [package] ，npm ls [package]<br> 查看[package]包的来源地址：npm view [package] repository.url<br>清除npm的缓存：npm cache clean<br>清除项目中没有被使用的包：npm prune<br>检查模块是否已经过时：npm outdated<br>会打开默认浏览器跳转到github中[package]的页面：npm repo [package]<br>会打开默认浏览器跳转到github中jquery的README.MD文件信息：npm docs [package]<br>会打开默认浏览器跳转到github中jquery的主页：npm home [package]</p></div>
-<h2 id="nrm"><a href="#nrm" class="headerlink" title="nrm"></a>nrm</h2><div class="post-note note-info"><p>nrm can help you easy and fast switch between different npm registries（nrm可以帮助您在不同的npm镜像源之间轻松快速地切换）<br>列出所有源： nrm ls<br>查看当前源：nrm current<br>使用某个源：nrm use &lt;源名称&gt;<br>添加一个源：nrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除一个源：nrm del &lt;源名称&gt;<br>  <a href="https://www.npmjs.com/package/nrm">nrm查看更多指令</a></p></div>
-<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><div class="post-note note-info"><p>pnpm也称高性能npm,相比npm、yarn优势在于节省磁盘空间并提升安装速度。<br>安装依赖：pnpm install xxx&#x2F;pnpm i xxx<br>设置包下载源：pnpm config set registry<br>获取包下载源：pnpm config get registry<br>安装依赖到dependencies:pnpm add<br>安装依赖到devDependencies：pnpm add -D<br>更新依赖包：pnpm update [package]，pnpm up [package]	<br>删除依赖包：pnpm remove [package]<br>所有命令查询文档：<a href="https://www.pnpm.cn/cli/add">pnpm中文文档-CLI命令</a></p></div>
-<h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><div class="post-note note-info"><p>安装指定版本node：nvm install vx.x.x<br>安装最新node：nvm install stable<br>设置node默认版：nvm alias default [node版本号]<br>删除指定版本node：nvm uninstall vx.x.x<br>查看所有已安装版本： nvm ls，nvm list<br>列出所以远程服务器的版本：nvm ls-remote<br>显示当前的版本：nvm current<br>给不同的版本号添加别名：nvm alias<br>删除已定义的别名：nvm unalias<br>在当前版本node下，重新全局安装指定版本号的npm包：nvm reinstall-packages<br>查看当前版本： nvm -v<br><a href="https://nvm.uihtm.com/">nvm官方文档</a></p></div>
-<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><div class="post-note note-info"></div>
-<h2 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h2><div class="post-note note-info"></div>
-]]></content>
-  </entry>
-</search>
+<p><a target="_blank" rel="noopener" href="https://github.com/lizil-git/flutter_news.git">源码获取地址</a></p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            李自力
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="https://www.liyueer.cn/posts/0.html">
+            https://www.liyueer.cn/posts/0.html
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/posts/0.html" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">上一篇</div>
+          
+        </div>
+      </a>
+    </div>
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/posts/fd390730.html" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">自动创建html </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+  <div 
+    class="card card-content comment-card" 
+    style="margin-top: 16px;">
+    <div class="comment-card-title">评论</div>
+    
+  </div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">第一步：搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="toc-text">第二步：创建应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BA%86%E8%A7%A3%E6%96%87%E4%BB%B6"><span class="toc-text">第三步：了解文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-yaml"><span class="toc-text">pubspec.yaml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-lock"><span class="toc-text">pubspec.lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios-x2F-android-x2F-web-x2F-windows-x2F-macos-x2F-linux"><span class="toc-text">ios&#x2F;android&#x2F;web&#x2F;windows&#x2F;macos&#x2F;linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib"><span class="toc-text">lib</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9AFlutter-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-text">第四步：Flutter 架构概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework%E6%A1%86%E6%9E%B6%E5%B1%82"><span class="toc-text">Framework框架层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Engine%E5%BC%95%E6%93%8E%E5%B1%82"><span class="toc-text">Engine引擎层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Embrdder%E5%B5%8C%E5%85%A5%E5%B1%82"><span class="toc-text">Embrdder嵌入层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D"><span class="toc-text">第五步：语言介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin"><span class="toc-text">mixin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5"><span class="toc-text">异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stream"><span class="toc-text">Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%88%A9"><span class="toc-text">安利</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AE%9E%E6%88%98"><span class="toc-text">第四步：实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%85%A5%E5%8F%A3"><span class="toc-text">主入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="toc-text">列表页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EwebView%E8%AF%A6%E6%83%85"><span class="toc-text">基于webView详情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%95%B0%E6%8D%AE"><span class="toc-text">请求及数据</span></a></li></ol></li></ol>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">第一步：搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="toc-text">第二步：创建应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BA%86%E8%A7%A3%E6%96%87%E4%BB%B6"><span class="toc-text">第三步：了解文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-yaml"><span class="toc-text">pubspec.yaml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pubspec-lock"><span class="toc-text">pubspec.lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios-x2F-android-x2F-web-x2F-windows-x2F-macos-x2F-linux"><span class="toc-text">ios&#x2F;android&#x2F;web&#x2F;windows&#x2F;macos&#x2F;linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib"><span class="toc-text">lib</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9AFlutter-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-text">第四步：Flutter 架构概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework%E6%A1%86%E6%9E%B6%E5%B1%82"><span class="toc-text">Framework框架层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Engine%E5%BC%95%E6%93%8E%E5%B1%82"><span class="toc-text">Engine引擎层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Embrdder%E5%B5%8C%E5%85%A5%E5%B1%82"><span class="toc-text">Embrdder嵌入层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D"><span class="toc-text">第五步：语言介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin"><span class="toc-text">mixin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5"><span class="toc-text">异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stream"><span class="toc-text">Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%88%A9"><span class="toc-text">安利</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AE%9E%E6%88%98"><span class="toc-text">第四步：实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%85%A5%E5%8F%A3"><span class="toc-text">主入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="toc-text">列表页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EwebView%E8%AF%A6%E6%83%85"><span class="toc-text">基于webView详情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%95%B0%E6%8D%AE"><span class="toc-text">请求及数据</span></a></li></ol></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>最近文章
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-07</div>
+        <a href="/posts/0.html"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-07</div>
+        <a href="/posts/0.html"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-04</div>
+        <a href="/posts/fd390730.html"><div class="recent-posts-item-content">自动创建html</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-03</div>
+        <a href="/posts/187a3295.html"><div class="recent-posts-item-content">包管理器命令</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2022
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          个人博客
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Blog
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+      </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
+    
+  </body>
+</html>
