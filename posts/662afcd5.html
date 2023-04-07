@@ -18,17 +18,17 @@
   <link 
     rel="icon" 
     href="/">
-  <title>归档</title>
+  <title>Mac搭建Flutter环境</title>
   
     
       <meta 
         property="og:title" 
-        content="归档">
+        content="Mac搭建Flutter环境">
     
     
       <meta 
         property="og:url" 
-        content="https://www.liyueer.cn/archives/2023/index.html">
+        content="https://www.liyueer.cn/posts/662afcd5.html">
     
     
       <meta 
@@ -40,6 +40,22 @@
         property="og:img" 
         content="个人学习成长之路">
     
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-04-07">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-04-07">
+      <meta 
+        property="og:article:author" 
+        content="李自力">
+      
+        
+      
     
   
   
@@ -56,6 +72,8 @@
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
   
   
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
   
   <script>
     function loadScript(url, cb) {
@@ -292,6 +310,18 @@
                <div class="sticky-tablet">
   
   
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Flutter-SDK%EF%BC%88%E5%85%A8%E7%A8%8B%E4%BB%A5Mac%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">安装Flutter SDK（全程以Mac为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%97%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">检查时出现的问题</span></a></li></ol>
+      </div>
+    </article>
+  
   
   <article class="card card-content categories-widget">
     <div class="categories-card">
@@ -322,131 +352,132 @@
   </article>
   
   
-    <article class="card card-content widescreen-archive archive-widget">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>归档
-  </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2023" 
-        class="archive-card-list-item">
-        2023
-        <span class="archive-card-list-item-badge">4</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
-  
 </div>
             </aside>
             <main class="main-column">
               
-<div class="card card-content">
-  <h1 class="widget-title">归档</h1>
-</div>
-<div class="archive-timeline">
-  
-  
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Mac搭建Flutter环境
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-04-07T03:28:28.577Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-04-07</span>
+    </time>
     
-      <div class="archive-timeline-tag"><span>2023</span></div>
-      
     
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2023-04-07</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/posts/662afcd5.html"
-              class="archive-timeline-post-item">
-              Mac搭建Flutter环境
-            </a>
-          </div>
-        </div>
+      <span class="dot"></span>
+      <span>551 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <p>安装Flutter学习网站：<a target="_blank" rel="noopener" href="https://flutter.cn/docs/get-started/install">Flutter安装文档</a></p>
+<h3 id="安装Flutter-SDK（全程以Mac为例）"><a href="#安装Flutter-SDK（全程以Mac为例）" class="headerlink" title="安装Flutter SDK（全程以Mac为例）"></a>安装Flutter SDK（全程以Mac为例）</h3><p>这里有两种方式进行安装，分别是使用安装包和使用git进行操作<br>:::info<br>方法一<br><a target="_blank" rel="noopener" href="https://flutter.cn/docs/development/tools/sdk/releases">Flutter版本列表</a>在这里选择合适的版本进行下载<br>下载完成后解压并<br>方式二<br>找到自己准备存放Flutter的文件夹 并按照如下操作<br>:::</p>
+<pre class="highlight"><code class="hljs bash">// 开始下载<br>$ git <span class="hljs-built_in">clone</span> https://github.com/flutter/flutter.git -b stable<br></code></pre>
+<pre class="highlight"><code class="hljs bash">// 查询自己默认使用的哪个shell<br>$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br>// bash<br>$ vim ~/.bash_profile<br>// zsh<br>$ vim ~/.zshrc<br>// 添加镜像<br>$ <span class="hljs-built_in">export</span> PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub<br>$ <span class="hljs-built_in">export</span> FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter<br>$ <span class="hljs-built_in">export</span> FLUTTER=~/xxx // 自己文件位置 <br>$ <span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$FLUTTER</span>/bin:<span class="hljs-variable">$PATH</span><br>// 退出编辑 ⇧+q 并输入 wq！<br>// 重载命令<br>// bash<br>$ <span class="hljs-built_in">source</span> ~/.bash_profile<br>// zsh<br>$ <span class="hljs-built_in">source</span> ~/.zshrc<br>// flutter doctor命令来查看当前环境是否需要安装其他的依赖 全部都出现对钩就表明检查通过<br>$ flutter doctor<br></code></pre>
+<h3 id="检查时出现的问题"><a href="#检查时出现的问题" class="headerlink" title="检查时出现的问题"></a>检查时出现的问题</h3><ol>
+<li>Android Studio (not installed)<br>因为Flutter需要依赖Android Studio来为提供Android平台的支持，因此需要安装全量安装Android Studio，<a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio安装地址</a>，</li>
+<li>Android toolchain - develop for Android devices —–[X]<br>Unable to locate Android SDK.</li>
+</ol>
+<p>Install Android Studio from:<br><a target="_blank" rel="noopener" href="https://developer.android.com/studio/index.html">https://developer.android.com/studio/index.html</a><br>On first launch it will assist you in installing the Android SDK<br>components.<br>(or visit <a target="_blank" rel="noopener" href="https://flutter.dev/docs/get-started/install/macos#android-setup">https://flutter.dev/docs/get-started/install/macos#android-setup</a><br>for detailed instructions).<br>If the Android SDK has been installed to a custom location, please use<br><code>flutter config --android-sdk</code> to update to that location.<br><strong>打开下载的Android Studio 并点击Configure 选择SDK Manger 找到 Android SDK 复制其 Android SDK Location。打开命令行并执行 ： flutter config –android-sdk 复制的地址</strong><br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680701064513-79eeffb5-0276-4482-9eff-4a664a029c11.png#averageHue=%234f515e&clientId=u708b8274-f4c1-4&from=paste&height=310&id=ubc603d7a&name=image.png&originHeight=620&originWidth=1626&originalType=binary&ratio=2&rotation=0&showTitle=false&size=471532&status=done&style=none&taskId=ufcfac575-2689-4d05-8b20-ae83b3c2014&title=&width=813" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680701064513-79eeffb5-0276-4482-9eff-4a664a029c11.png#averageHue=%234f515e&clientId=u708b8274-f4c1-4&from=paste&height=310&id=ubc603d7a&name=image.png&originHeight=620&originWidth=1626&originalType=binary&ratio=2&rotation=0&showTitle=false&size=471532&status=done&style=none&taskId=ufcfac575-2689-4d05-8b20-ae83b3c2014&title=&width=813" class="lozad post-image"><br><strong>如果再次flutter doctor时还是有问题请检查</strong><br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680702481156-97a9b94c-0e5f-492e-b280-3d0216838548.png#averageHue=%233d4046&clientId=u708b8274-f4c1-4&from=paste&height=265&id=u581ca1aa&name=image.png&originHeight=530&originWidth=1644&originalType=binary&ratio=2&rotation=0&showTitle=false&size=152265&status=done&style=none&taskId=ued2a2fc9-5dda-4e43-822b-5aa7a5d6c2d&title=&width=822" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680702481156-97a9b94c-0e5f-492e-b280-3d0216838548.png#averageHue=%233d4046&clientId=u708b8274-f4c1-4&from=paste&height=265&id=u581ca1aa&name=image.png&originHeight=530&originWidth=1644&originalType=binary&ratio=2&rotation=0&showTitle=false&size=152265&status=done&style=none&taskId=ued2a2fc9-5dda-4e43-822b-5aa7a5d6c2d&title=&width=822" class="lozad post-image"></p>
+<ol start="3">
+<li>Android toolchain - develop for Android devices (Android SDK version 33.0.2)<br>Some Android licenses not accepted. To resolve this, run: flutter doctor–android-licenses</li>
+</ol>
+<p><strong>这是有些许可还没开启因此只需要执行：flutter doctor –android-licenses</strong></p>
+<ol start="4">
+<li>Xcode (not installed)<br>同样是需要安装Xcode为其提供iOS方面的支持，<a target="_blank" rel="noopener" href="https://developer.apple.com/xcode/">下载地址</a></li>
+<li>Xcode - develop for iOS and macOS (Xcode 13.1)</li>
+</ol>
+<p>“✗ CocoaPods not installed.”<br><strong>十分明确未安装CocoaPods，执行：brew install cocoapods</strong><br>最终检查结果为如下所示即为全部安装成功，除了Flutter是必须得，其他看自己项目将要打包成什么项目进行选择安装，并不是必须的。<br><img src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680705825519-95fff26c-a0aa-43e2-b750-3440ae2c7300.png#averageHue=%23f1f1f0&clientId=u708b8274-f4c1-4&from=paste&height=192&id=ua8208f34&name=image.png&originHeight=384&originWidth=1024&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218444&status=done&style=none&taskId=u8e7dc8e1-c960-4141-bd67-35be10a41b6&title=&width=512" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1680705825519-95fff26c-a0aa-43e2-b750-3440ae2c7300.png#averageHue=%23f1f1f0&clientId=u708b8274-f4c1-4&from=paste&height=192&id=ua8208f34&name=image.png&originHeight=384&originWidth=1024&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218444&status=done&style=none&taskId=u8e7dc8e1-c960-4141-bd67-35be10a41b6&title=&width=512" class="lozad post-image"></p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            李自力
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="https://www.liyueer.cn/posts/662afcd5.html">
+            https://www.liyueer.cn/posts/662afcd5.html
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
       </div>
-    </div>
-  
     
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2023-04-07</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/posts/c874a042.html"
-              class="archive-timeline-post-item">
-              flutter从无到有
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div>
+</article>
+<div class="nav">
   
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2023-04-04</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/posts/fd390730.html"
-              class="archive-timeline-post-item">
-              自动创建html
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
   
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2023-04-03</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/posts/187a3295.html"
-              class="archive-timeline-post-item">
-              包管理器命令
-            </a>
-          </div>
+    <div class="nav-item-next">
+      <a 
+        href="/posts/c874a042.html" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">flutter从无到有 </div>
+          
         </div>
-      </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
     </div>
   
 </div>
 
+  <div 
+    class="card card-content comment-card" 
+    style="margin-top: 16px;">
+    <div class="comment-card-title">评论</div>
+    
+  </div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Flutter-SDK%EF%BC%88%E5%85%A8%E7%A8%8B%E4%BB%A5Mac%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">安装Flutter SDK（全程以Mac为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%97%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">检查时出现的问题</span></a></li></ol>
+</div>
             </main>
             <aside class="right-column">
               <div class="sticky-widescreen">
   
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Flutter-SDK%EF%BC%88%E5%85%A8%E7%A8%8B%E4%BB%A5Mac%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">安装Flutter SDK（全程以Mac为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%97%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">检查时出现的问题</span></a></li></ol>
+    </article>
   
   
   <article class="card card-content">
@@ -483,48 +514,6 @@
 </div>
   </article>
   
-  
-    <article class="card card-content">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>归档
-  </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2023" 
-        class="archive-card-list-item">
-        2023
-        <span class="archive-card-list-item-badge">4</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
   
 </div>
             </aside>
@@ -640,6 +629,36 @@
 </a> 
      
      
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
      
      
     <script src="/js/main.js"></script> 
