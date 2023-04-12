@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="个人学习成长之路">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>vue3数据双向绑定原理</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="vue3数据双向绑定原理">
+    
+    
+      <meta 
+        property="og:url" 
+        content="https://www.liyueer.cn/posts/fe0b65a8.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://www.liyueer.cn/img/1.png">
+    
+    
+      <meta 
+        property="og:img" 
+        content="个人学习成长之路">
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-04-12">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-04-12">
+      <meta 
+        property="og:article:author" 
+        content="李自力">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+    
+    <link rel="prefetch" href="//unpkg.com/valine/dist/Valine.min.js" as="script">
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">个人博客</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          首页
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          归档
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          标签
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          分类
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          关于
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          友链
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://www.liyueer.cn/img/1.png" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">李自力</p>
+<p class="author-description">个人学习之路</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>8</span>
+    <span>文章</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>分类</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%A4%A7%E7%BA%B2"><span class="toc-text">设计大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proxy%E6%8D%95%E8%8E%B7%E5%99%A8"><span class="toc-text">Proxy捕获器</span></a></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>分类
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>热门标签
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      vue3数据双向绑定原理
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-04-12T10:13:20.092Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-04-12</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>1.1k 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 因为vue3中不再是将数据定义到data中就可以实现响应式,而是使用reactive或ref</span><br><span class="hljs-comment">// WeakMap 的 key 只能是 Object 类型。</span><br><span class="hljs-keyword">let</span> targetMap = <span class="hljs-title class_">WeakMap</span>();<br><span class="hljs-keyword">let</span> activeEffect;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * &#123;</span><br><span class="hljs-comment"> *    target:&#123;</span><br><span class="hljs-comment"> *      key: [ReactiveEffect,ReactiveEffect,....]</span><br><span class="hljs-comment"> *    &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><br><span class="hljs-comment">// 收集依赖</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">track</span>(<span class="hljs-params">target, key</span>) &#123;<br>    <span class="hljs-comment">// 判断该值是否收集,未收集就添加</span><br>    <span class="hljs-keyword">let</span> depsMap = targetMap.<span class="hljs-title function_">get</span>(target);<br>    <span class="hljs-keyword">if</span> (!depsMap) targetMap.<span class="hljs-title function_">set</span>(depsMap, (depsMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>()));<br>    <span class="hljs-comment">// 判断depsMap 中有没有key</span><br>    <span class="hljs-keyword">let</span> dep = depsMap.<span class="hljs-title function_">get</span>(key);<br>    <span class="hljs-keyword">if</span> (!dep) depsMap.<span class="hljs-title function_">set</span>(key, (dep = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()));<br>    <span class="hljs-title function_">trackEffect</span>(dep);<br>&#125;<br><br><span class="hljs-comment">//</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">trackEffect</span>(<span class="hljs-params">dep</span>) &#123;<br>    <span class="hljs-comment">// 相当于 vue2中的, Dep.target &amp;&amp; dep.add(Dep.target)</span><br>    <span class="hljs-keyword">if</span> (dep.<span class="hljs-title function_">has</span>(activeEffect)) dep.<span class="hljs-title function_">add</span>(activeEffect)<br>&#125;<br><span class="hljs-comment">// 触发</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">trigger</span>(<span class="hljs-params">target, key</span>) &#123;<br>    <span class="hljs-keyword">const</span> depsMap = targetMap.<span class="hljs-title function_">get</span>(target);<br>    <span class="hljs-keyword">if</span> (!depsMap) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-comment">// effect 上面肯定有一个 run 方法。</span><br>    depsMap.<span class="hljs-title function_">get</span>(key).<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">effect</span> =&gt;</span> effect &amp;&amp; effect.<span class="hljs-title function_">run</span>())<br>&#125;<br><br><br><span class="hljs-comment">/** </span><br><span class="hljs-comment">备注1: Reflect</span><br><span class="hljs-comment">Reflect是一个内建的对象，用来提供方法去拦截JavaScript的操作。Reflect不是一个函数对象，所以它是不可构造的，也就是说它不是一个构造器，你不能通过`new`操作符去新建或者将其作为一个函数去调用Reflect对象。Reflect的所有属性和方法都是静态的。</span><br><span class="hljs-comment">1.现阶段，某些方法同时在Object和Reflect对象上部署，未来的新方法将只部署在Reflect对象上。</span><br><span class="hljs-comment">2.修改某些Object方法的返回结果，让其变得更规范化。如Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而Reflect.defineProperty(obj, name, desc)则会返回false。让Object操作都变成函数行为。</span><br><span class="hljs-comment">3.Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//进行判断是否是对象</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">isObject</span>(<span class="hljs-params">data</span>) &#123;<br>    <span class="hljs-keyword">return</span> data &amp;&amp; <span class="hljs-keyword">typeof</span> data === <span class="hljs-string">&#x27;object&#x27;</span><br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">reactive</span>(<span class="hljs-params">data</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isObject</span>(data)) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-comment">// Proxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。</span><br>    <span class="hljs-comment">// https://www.bookstack.cn/read/es6-3rd/spilt.1.docs-proxy.md  Proxy 支持的拦截操作，一共 13 种</span><br>    <span class="hljs-comment">// 简化createReactiveObject</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Proxy</span>(data, &#123;<br>        <span class="hljs-comment">// Reflect.get()方法与从 对象 (target[propertyKey]) 中读取属性类似，但它是通过一个函数执行来操作的。</span><br>        <span class="hljs-comment">// 因备注1.1,在继承可能会出现问题 因此这里不使用target[key]</span><br>        <span class="hljs-title function_">get</span>(<span class="hljs-params">target, key, reactiver</span>) &#123;<br>            <span class="hljs-keyword">const</span> ret = <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">get</span>(target, key, reactiver);<br>            <span class="hljs-title function_">track</span>(target, key);<br>            <span class="hljs-keyword">return</span> <span class="hljs-title function_">isObject</span>(ret) ? <span class="hljs-title function_">reactive</span>(ret) : ret;<br>        &#125;,<br>        <span class="hljs-comment">// Reflect.set() 工作方式就像在一个对象上设置一个属性。</span><br>        <span class="hljs-title function_">set</span>(<span class="hljs-params">target, key, value, reactiver</span>) &#123;<br>            <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">set</span>(target, key, value, reactiver);<br>            <span class="hljs-title function_">trigger</span>(target, key);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;,<br>        <span class="hljs-comment">// 拦截delete操作，如果这个方法抛出错误，或者返回false，则当前属性就无法被delete命令删除</span><br>        <span class="hljs-title function_">deleteProperty</span>(<span class="hljs-params">target, key</span>) &#123;<br>            <span class="hljs-title function_">trigger</span>(target, key);<br>            <span class="hljs-keyword">return</span> <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">defineProperty</span>(target, key);<br>        &#125;,<br>        <span class="hljs-comment">//拦截HasProperty操作，即判断对象是否具有某个属性时，这个方法会生效，典型的就是in操作符</span><br>        <span class="hljs-comment">//如果原对象不可配置或者禁止扩展，这时has拦截会报错。</span><br>        <span class="hljs-comment">//值得注意的是，has方法拦截的是HasProperty操作，而不是HasOwnProperty操作，即has方法不判断一个属性是对象自身的属性，还是继承的属性。</span><br>        <span class="hljs-title function_">has</span>(<span class="hljs-params">target, key</span>) &#123;<br>            <span class="hljs-title function_">track</span>(target, key);<br>            <span class="hljs-keyword">return</span> <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(target, key);<br>        &#125;,<br>        <span class="hljs-comment">//拦截对象自身属性的读取操作，具体拦截以下操作：object.getOwnPropertyNames(), object.getOwnPropertySymbols(), object.keys()</span><br>        <span class="hljs-title function_">ownKeys</span>(<span class="hljs-params">target, key</span>) &#123;<br>            <span class="hljs-title function_">track</span>(target, key);<br>            <span class="hljs-keyword">return</span> <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">ownKeys</span>(target, key)<br>        &#125;<br>    &#125;)<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">ref</span>(<span class="hljs-params">init</span>) &#123;<br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">RefImpl</span> &#123;<br>        <span class="hljs-title function_">constructor</span>(<span class="hljs-params">init</span>) &#123;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">__value</span> = init;<br>        &#125;<br>        <span class="hljs-keyword">get</span> <span class="hljs-title function_">value</span>() &#123;<br>            <span class="hljs-comment">// trackRefValue源码方法,为了方便现全部使用track</span><br>            <span class="hljs-title function_">track</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-string">&quot;value&quot;</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">__value</span>;<br>        &#125;<br>        <span class="hljs-keyword">set</span> <span class="hljs-title function_">value</span>(<span class="hljs-params">newValue</span>) &#123;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">__value</span> = newValue;<br>            <span class="hljs-title function_">trigger</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-string">&#x27;value&#x27;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RefImpl</span>(init)<br>&#125;<br><br><br><span class="hljs-comment">// 在定义一个 effect 的函数中，第一个参数是一个函数；</span><br><span class="hljs-comment">// 如果这个函数中，有使用 ref/reactive </span><br><span class="hljs-comment">// effect(() =&gt; &#123;</span><br><span class="hljs-comment">//    console.log(num.value)</span><br><span class="hljs-comment">// &#125;)</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">effect</span>(<span class="hljs-params">fn, options = &#123;&#125;</span>) &#123;<br>    <span class="hljs-keyword">let</span> __effect = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReactiveEffect</span>(fn);<br>    <span class="hljs-keyword">if</span> (!options.<span class="hljs-property">lazy</span>) &#123;<br>        __effect.<span class="hljs-title function_">run</span>();<br>    &#125;<br>    <span class="hljs-keyword">return</span> __effect;<br>&#125;<br><br><span class="hljs-comment">// 计算属性监听</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">computed</span>(<span class="hljs-params">fn</span>) &#123;<br>    <span class="hljs-comment">// 只考虑函数的情况</span><br>    <span class="hljs-keyword">let</span> __computed;<br>    <span class="hljs-keyword">const</span> e = <span class="hljs-title function_">effect</span>(fn, &#123; <span class="hljs-attr">lazy</span>: <span class="hljs-literal">true</span> &#125;);<br>    __computed = &#123;<br>        <span class="hljs-keyword">get</span> <span class="hljs-title function_">value</span>() &#123;<br>            <span class="hljs-keyword">return</span> e.<span class="hljs-title function_">run</span>();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> __computed;<br><br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">mount</span>(<span class="hljs-params">instance, el</span>) &#123;<br>    <span class="hljs-title function_">effect</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        instance.<span class="hljs-property">$data</span> &amp;&amp; <span class="hljs-title function_">update</span>(instance, el);<br>    &#125;)<br>    instance.<span class="hljs-property">$data</span> = instance.<span class="hljs-title function_">setup</span>()<br>    <span class="hljs-title function_">update</span>(instance, el);<br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">instance, el</span>) &#123;<br>        el.<span class="hljs-property">innerHTML</span> = instance.<span class="hljs-title function_">render</span>();<br>    &#125;<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ReactiveEffect</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">fn</span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">fn</span> = fn;<br>    &#125;<br>    <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) &#123;<br>        activeEffect = <span class="hljs-variable language_">this</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">fn</span>();<br>    &#125;<br>&#125;<br></code></pre>
+<h2 id="设计大纲"><a href="#设计大纲" class="headerlink" title="设计大纲"></a>设计大纲</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655262364892-868dfc78-aed5-42de-8997-9581666eeae0.png#averageHue=%23f9f8f8&clientId=u8c4af0e2-d2a6-4&from=paste&height=247&id=uea64084a&name=image.png&originHeight=494&originWidth=1454&originalType=binary&ratio=1&rotation=0&showTitle=false&size=111803&status=done&style=none&taskId=u59193ea8-c098-4617-8f42-8c5969af80d&title=&width=727" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655262364892-868dfc78-aed5-42de-8997-9581666eeae0.png#averageHue=%23f9f8f8&clientId=u8c4af0e2-d2a6-4&from=paste&height=247&id=uea64084a&name=image.png&originHeight=494&originWidth=1454&originalType=binary&ratio=1&rotation=0&showTitle=false&size=111803&status=done&style=none&taskId=u59193ea8-c098-4617-8f42-8c5969af80d&title=&width=727" class="lozad post-image"></p>
+<h2 id="Proxy捕获器"><a href="#Proxy捕获器" class="headerlink" title="Proxy捕获器"></a>Proxy捕获器</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655274755418-3d91a945-516c-4bfd-9f1f-41736b4c4e8d.png#averageHue=%23f9f9f9&clientId=u337650ff-b894-4&from=paste&height=869&id=u170247bc&name=image.png&originHeight=1738&originWidth=1420&originalType=binary&ratio=1&rotation=0&showTitle=false&size=270174&status=done&style=none&taskId=u1b2c819b-c3ee-4ffa-993f-38e438651ef&title=&width=710" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655274755418-3d91a945-516c-4bfd-9f1f-41736b4c4e8d.png#averageHue=%23f9f9f9&clientId=u337650ff-b894-4&from=paste&height=869&id=u170247bc&name=image.png&originHeight=1738&originWidth=1420&originalType=binary&ratio=1&rotation=0&showTitle=false&size=270174&status=done&style=none&taskId=u1b2c819b-c3ee-4ffa-993f-38e438651ef&title=&width=710" class="lozad post-image"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655274784234-e66e45cc-6f7f-415d-a1e9-9383b3a0f792.png#averageHue=%23fbfafa&clientId=u337650ff-b894-4&from=paste&height=513&id=u9c60fa5e&name=image.png&originHeight=1026&originWidth=1478&originalType=binary&ratio=1&rotation=0&showTitle=false&size=147484&status=done&style=none&taskId=u3266ed5d-e854-4f48-8160-1aa00086721&title=&width=739" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2022/png/28427234/1655274784234-e66e45cc-6f7f-415d-a1e9-9383b3a0f792.png#averageHue=%23fbfafa&clientId=u337650ff-b894-4&from=paste&height=513&id=u9c60fa5e&name=image.png&originHeight=1026&originWidth=1478&originalType=binary&ratio=1&rotation=0&showTitle=false&size=147484&status=done&style=none&taskId=u3266ed5d-e854-4f48-8160-1aa00086721&title=&width=739" class="lozad post-image"></p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            李自力
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="https://www.liyueer.cn/posts/fe0b65a8.html">
+            https://www.liyueer.cn/posts/fe0b65a8.html
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/posts/5b80f5a6.html" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">vue2数据双向绑定原理 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+  <div 
+    class="card card-content comment-card" 
+    style="margin-top: 16px;">
+    <div class="comment-card-title">评论</div>
+    
+  </div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%A4%A7%E7%BA%B2"><span class="toc-text">设计大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proxy%E6%8D%95%E8%8E%B7%E5%99%A8"><span class="toc-text">Proxy捕获器</span></a></li></ol>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%A4%A7%E7%BA%B2"><span class="toc-text">设计大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proxy%E6%8D%95%E8%8E%B7%E5%99%A8"><span class="toc-text">Proxy捕获器</span></a></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>最近文章
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-12</div>
+        <a href="/posts/fe0b65a8.html"><div class="recent-posts-item-content">vue3数据双向绑定原理</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-12</div>
+        <a href="/posts/5b80f5a6.html"><div class="recent-posts-item-content">vue2数据双向绑定原理</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-12</div>
+        <a href="/posts/85d98369.html"><div class="recent-posts-item-content">发布—订阅模式</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-12</div>
+        <a href="/posts/a6eed33.html"><div class="recent-posts-item-content">工作技巧</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2022
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          个人博客
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Blog
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+      </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
+    
+  </body>
+</html>
