@@ -18,17 +18,17 @@
   <link 
     rel="icon" 
     href="/">
-  <title>包管理器命令</title>
+  <title>工作技巧</title>
   
     
       <meta 
         property="og:title" 
-        content="包管理器命令">
+        content="工作技巧">
     
     
       <meta 
         property="og:url" 
-        content="https://www.liyueer.cn/posts/187a3295.html">
+        content="https://www.liyueer.cn/posts/a6eed33.html">
     
     
       <meta 
@@ -46,10 +46,10 @@
         content="article">
       <meta 
         property="og:article:published_time" 
-        content="2023-04-03">
+        content="2023-04-12">
       <meta 
         property="og:article:modified_time" 
-        content="2023-04-05">
+        content="2023-04-12">
       <meta 
         property="og:article:author" 
         content="李自力">
@@ -318,7 +318,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E5%B5%8C%E5%A5%97-if%E2%80%A6else-%E6%88%96-switch-case%EF%BC%8C%E7%AE%80%E5%8D%95%E5%9C%B0%E4%BD%BF%E7%94%A8%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6AND-x2F-OR%E3%80%82"><span class="toc-text">减少嵌套 if…else 或 switch case，简单地使用基本的逻辑运算符AND&#x2F;OR。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rest%EF%BC%88%E5%89%A9%E4%BD%99%EF%BC%89-amp-Spread-%EF%BC%88%E6%89%A9%E5%B1%95%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6-%E2%80%A6%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%84%8F%E4%B9%89"><span class="toc-text">Rest（剩余） &amp; Spread （扩展）运算符(…的两种意义)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7"><span class="toc-text">开发技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%B9%E6%A1%86%E8%99%9A%E7%BA%BF"><span class="toc-text">自定义边框虚线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%95%B4%E4%BD%93%E7%BD%AE%E7%81%B0"><span class="toc-text">项目整体置灰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video%E9%83%A8%E5%88%86%E6%B5%8F%E8%A7%88%E5%99%A8%E5%87%BA%E7%8E%B0%E8%BE%B9%E6%A1%86%E9%97%AE%E9%A2%98"><span class="toc-text">video部分浏览器出现边框问题</span></a></li></ol>
       </div>
     </article>
   
@@ -359,21 +359,21 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      包管理器命令
+      工作技巧
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2023-04-03T09:19:35.434Z">
+    <time datetime="2023-04-12T10:00:55.504Z">
       <i 
         class="iconfont icon-calendar" 
         style="margin-right: 2px;">
       </i>
-      <span>2023-04-03</span>
+      <span>2023-04-12</span>
     </time>
     
     
       <span class="dot"></span>
-      <span>1.1k 字</span>
+      <span>482 字</span>
     
   </div>
   
@@ -381,15 +381,14 @@
   <div 
     id="section" 
     class="post-content">
-    <p>记录一下各种开发中能够用到的工具命令,方便快速查询到一些常用命令</p>
-<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><div class="post-note note-info"><p>设置包下载源：yarn config set npmRegistryServer<br>查看当前包下载源：yarn config get registry<br>自动安装最新版本，会覆盖指定版本号：yarn add [package]<br>一次性添加多个包：yarn add [package] [package] [package]<br>添加指定版本的包：yarn add [package]@[version]<br>安装某个tag：yarn add [package]@[tag]<br>添加到devDependencies：–dev，-D<br>添加到peerDependencies：–peer， -P<br>添加到optionalDependencies：–optional，-O<br>升级到最新版本：yarn upgrade [package]<br>升级到指定版本：yarn upgrade [package]@[version]<br>升级到指定tag：yarn upgrade [package]@[tag]<br>移除包：yarn remove [package]<br>安装所有依赖： yarn，yarn install<br>安装一个包的单一版本：yarn install –flat<br>强制重新下载所有包：yarn install –force<br>只安装生产环境依赖：yarn install –production<br>可以用来查看某个模块的最新版本信息：yarn info [package]<br>列出已缓存的每个包：yarn cache list<br>返回全局缓存位置：yarn cache dir<br>清除缓存：yarn cache clean </p></div>
-<h2 id="yrm"><a href="#yrm" class="headerlink" title="yrm"></a>yrm</h2><div class="post-note note-info"><p>yrm 是一个 yarn源管理器，可以快速地在源间切换<br>查看已有源：yrm ls<br>使用xxx镜像源： yrm use xxx<br>增加一个源：yrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除源: yrm del &lt;源名称&gt;<br>测试xx镜像源访问速度：yrm test taobao<br>查看npm当前镜像源：npm config get registry<br>查看yarn当前镜像源：yarn config get registry </p></div>
-<h2 id="npm、cnpm"><a href="#npm、cnpm" class="headerlink" title="npm、cnpm"></a>npm、cnpm</h2><div class="post-note note-info"><p>设置包下载源：npm config set registry<br>获取包下载源：npm config get registry<br>安装所有依赖: npm install，npm i<br>安装到全局目录里：-g，–global<br>添加到dependencies：-S，–save<br>添加到devDependencies-D，–save-dev<br>卸载依赖，不卸载package.json的对应信息：npm uninstall [package]<br>卸载全局模块：npm uninstall [package] -g<br>卸载依赖，不卸载package.json中的dependencies对应信息：npm uninstall [package] –save<br>卸载依赖，同时package.json中的devDependencies对应信息：npm uninstall [package] –save-dev<br>更新最新版本:npm update [package]<br>更新到指定版本号:npm update [package]@[version]<br>更新到最后一个新版本:npm install [package]@latest<br>查看项目中模块所在的目录：npm root<br>查看全局安装的模块所在目录：npm root -g<br>查看本地已安装模块的清单列表:npm list， npm ls<br>查看某个包对于各种包的依赖关系：npm view [version] dependencies<br>查看[package]最新的版本号：npm view [package] version<br>查看所有[package]历史版本号：npm view [package] versions<br>查看最新的[package]版本的信息：npm view [package]<br>查看[package]的详细信息：npm info [package]<br>查看本地已安装的[package]的详细信息：npm list [package] ，npm ls [package]<br> 查看[package]包的来源地址：npm view [package] repository.url<br>清除npm的缓存：npm cache clean<br>清除项目中没有被使用的包：npm prune<br>检查模块是否已经过时：npm outdated<br>会打开默认浏览器跳转到github中[package]的页面：npm repo [package]<br>会打开默认浏览器跳转到github中jquery的README.MD文件信息：npm docs [package]<br>会打开默认浏览器跳转到github中jquery的主页：npm home [package]</p></div>
-<h2 id="nrm"><a href="#nrm" class="headerlink" title="nrm"></a>nrm</h2><div class="post-note note-info"><p>nrm can help you easy and fast switch between different npm registries（nrm可以帮助您在不同的npm镜像源之间轻松快速地切换）<br>列出所有源： nrm ls<br>查看当前源：nrm current<br>使用某个源：nrm use &lt;源名称&gt;<br>添加一个源：nrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除一个源：nrm del &lt;源名称&gt;<br>  <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/nrm">nrm查看更多指令</a></p></div>
-<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><div class="post-note note-info"><p>pnpm也称高性能npm,相比npm、yarn优势在于节省磁盘空间并提升安装速度。<br>安装依赖：pnpm install xxx&#x2F;pnpm i xxx<br>设置包下载源：pnpm config set registry<br>获取包下载源：pnpm config get registry<br>安装依赖到dependencies:pnpm add<br>安装依赖到devDependencies：pnpm add -D<br>更新依赖包：pnpm update [package]，pnpm up [package]	<br>删除依赖包：pnpm remove [package]<br>所有命令查询文档：<a target="_blank" rel="noopener" href="https://www.pnpm.cn/cli/add">pnpm中文文档-CLI命令</a></p></div>
-<h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><div class="post-note note-info"><p>安装指定版本node：nvm install vx.x.x<br>安装最新node：nvm install stable<br>设置node默认版：nvm alias default [node版本号]<br>删除指定版本node：nvm uninstall vx.x.x<br>查看所有已安装版本： nvm ls，nvm list<br>列出所以远程服务器的版本：nvm ls-remote<br>显示当前的版本：nvm current<br>给不同的版本号添加别名：nvm alias<br>删除已定义的别名：nvm unalias<br>在当前版本node下，重新全局安装指定版本号的npm包：nvm reinstall-packages<br>查看当前版本： nvm -v<br><a target="_blank" rel="noopener" href="https://nvm.uihtm.com/">nvm官方文档</a></p></div>
-<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><div class="post-note note-info"></div>
-<h2 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h2><div class="post-note note-info"></div>
+    <h3 id="减少嵌套-if…else-或-switch-case，简单地使用基本的逻辑运算符AND-x2F-OR。"><a href="#减少嵌套-if…else-或-switch-case，简单地使用基本的逻辑运算符AND-x2F-OR。" class="headerlink" title="减少嵌套 if…else 或 switch case，简单地使用基本的逻辑运算符AND&#x2F;OR。"></a>减少嵌套 if…else 或 switch case，简单地使用基本的逻辑运算符AND&#x2F;OR。</h3><pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 与 if (foo == 10) then console.log(&#x27;进入判断了&#x27;) 相同 // 输出: 进入判断了 </span><br><span class="hljs-keyword">let</span> foo = <span class="hljs-number">10</span>; foo === <span class="hljs-number">10</span> &amp;&amp; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;进入判断了&#x27;</span>)  <br><span class="hljs-comment">// 与 if (foo != 5) then console.log(&#x27;进入判断了&#x27;) 相同 // 输出: 进入判断了</span><br>foo === <span class="hljs-number">5</span> || <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;进入判断了&#x27;</span>) <br></code></pre>
+<h3 id="Rest（剩余）-amp-Spread-（扩展）运算符-…的两种意义"><a href="#Rest（剩余）-amp-Spread-（扩展）运算符-…的两种意义" class="headerlink" title="Rest（剩余） &amp; Spread （扩展）运算符(…的两种意义)"></a>Rest（剩余） &amp; Spread （扩展）运算符(…的两种意义)</h3><pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">//示例1  方法结构传参</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">spread</span>(<span class="hljs-params">arg1, arg2, arg3</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arg1);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arg2);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arg3);<br>&#125;<br><br><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-title function_">spread</span>(...arr);<br><br><span class="hljs-comment">//示例2  合并数组或者对象</span><br><span class="hljs-keyword">var</span> arr1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br><span class="hljs-keyword">var</span> arr2 = [...arr1, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>];<br><span class="hljs-keyword">var</span> obj1 = &#123; <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span> &#125;;<br><span class="hljs-keyword">var</span> obj2 = &#123; ...obj1, <span class="hljs-attr">d</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">e</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">f</span>: <span class="hljs-number">6</span> &#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr2);<br></code></pre>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 示例1 当函数参数个数不确定时</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">rest1</span>(<span class="hljs-params">...arr</span>) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> arr) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(item);<br>    &#125;<br>&#125;<br><span class="hljs-title function_">rest1</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br><br><span class="hljs-comment">//示例2 当确定其中几个,后续未知</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">rest2</span>(<span class="hljs-params">item, ...arr</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(item);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr);<br>&#125;<br><span class="hljs-title function_">rest2</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br><br><span class="hljs-comment">//示例3 rest运算符配合 解构使用：</span><br><span class="hljs-keyword">var</span> [a, ...temp] = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>];<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(temp);<br><br></code></pre>
+<h3 id="开发技巧"><a href="#开发技巧" class="headerlink" title="开发技巧"></a>开发技巧</h3><p>尽量在开发中面向接口开发，而不是为了任务去拼凑代码从而将代码开发成了面向实现开发。</p>
+<h3 id="自定义边框虚线"><a href="#自定义边框虚线" class="headerlink" title="自定义边框虚线"></a>自定义边框虚线</h3><pre class="highlight"><code class="hljs css">// 一条直的虚线<br><span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(to bottom, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">80%</span>, transparent <span class="hljs-number">50%</span>);<br><span class="hljs-attribute">background-size</span>: <span class="hljs-number">3px</span> <span class="hljs-number">18px</span>;<br><span class="hljs-attribute">background-repeat</span>: y-repeat;<br>// 边框虚线<br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">90deg</span>, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">50%</span>, transparent <span class="hljs-number">0</span>) repeat-x, <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">90deg</span>, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">50%</span>, transparent <span class="hljs-number">0</span>) repeat-x, <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">0deg</span>, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">50%</span>, transparent <span class="hljs-number">0</span>) repeat-y, <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">0deg</span>, <span class="hljs-number">#3A75FF</span> <span class="hljs-number">50%</span>, transparent <span class="hljs-number">0</span>) repeat-y;<br><span class="hljs-attribute">background-size</span>: <span class="hljs-number">8px</span> <span class="hljs-number">2px</span>, <span class="hljs-number">8px</span> <span class="hljs-number">2px</span>, <span class="hljs-number">2px</span> <span class="hljs-number">8px</span>, <span class="hljs-number">2px</span> <span class="hljs-number">8px</span>;<br><span class="hljs-attribute">background-position</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span>, <span class="hljs-number">0</span> <span class="hljs-number">100%</span>, <span class="hljs-number">0</span> <span class="hljs-number">0</span>, <span class="hljs-number">100%</span> <span class="hljs-number">0</span>;<br></code></pre>
+<h3 id="项目整体置灰"><a href="#项目整体置灰" class="headerlink" title="项目整体置灰"></a>项目整体置灰</h3><p>为应对各种哀悼日将项目整体置灰</p>
+<pre class="highlight"><code class="hljs css"><span class="hljs-selector-tag">body</span>,<span class="hljs-selector-tag">html</span>&#123;<br>  <span class="hljs-attribute">filter</span>: progid:DXImageTransform.Microsoft.<span class="hljs-built_in">BasicImage</span>(graysale=<span class="hljs-number">1</span>); //针对IE浏览器 <br>  -webkit-<span class="hljs-attribute">filter</span>: <span class="hljs-built_in">grayscale</span>(<span class="hljs-number">100%</span>);<br>&#125;<br></code></pre>
+<h3 id="video部分浏览器出现边框问题"><a href="#video部分浏览器出现边框问题" class="headerlink" title="video部分浏览器出现边框问题"></a>video部分浏览器出现边框问题</h3><p>对边框进行设置mask-image</p>
 
   </div>
   <div>
@@ -409,8 +408,8 @@
           <span style="font-weight: bold;">文章链接：</span><a 
             target="_blank" 
             rel="nofollow noopener noreferrer" 
-            href="https://www.liyueer.cn/posts/187a3295.html">
-            https://www.liyueer.cn/posts/187a3295.html
+            href="https://www.liyueer.cn/posts/a6eed33.html">
+            https://www.liyueer.cn/posts/a6eed33.html
           </a>
         </p>
         <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
@@ -420,20 +419,20 @@
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
+  
+    <div class="nav-item-next">
       <a 
-        href="/posts/fd390730.html" 
+        href="/posts/662afcd5.html" 
         class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
         <div>
-          <div class="nav-label">上一篇</div>
+          <div class="nav-label">下一篇</div>
           
-            <div class="nav-title">自动创建html </div>
+            <div class="nav-title">Mac搭建Flutter环境 </div>
           
         </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
       </a>
     </div>
-  
   
 </div>
 
@@ -453,7 +452,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E5%B5%8C%E5%A5%97-if%E2%80%A6else-%E6%88%96-switch-case%EF%BC%8C%E7%AE%80%E5%8D%95%E5%9C%B0%E4%BD%BF%E7%94%A8%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6AND-x2F-OR%E3%80%82"><span class="toc-text">减少嵌套 if…else 或 switch case，简单地使用基本的逻辑运算符AND&#x2F;OR。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rest%EF%BC%88%E5%89%A9%E4%BD%99%EF%BC%89-amp-Spread-%EF%BC%88%E6%89%A9%E5%B1%95%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6-%E2%80%A6%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%84%8F%E4%B9%89"><span class="toc-text">Rest（剩余） &amp; Spread （扩展）运算符(…的两种意义)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7"><span class="toc-text">开发技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%B9%E6%A1%86%E8%99%9A%E7%BA%BF"><span class="toc-text">自定义边框虚线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%95%B4%E4%BD%93%E7%BD%AE%E7%81%B0"><span class="toc-text">项目整体置灰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video%E9%83%A8%E5%88%86%E6%B5%8F%E8%A7%88%E5%99%A8%E5%87%BA%E7%8E%B0%E8%BE%B9%E6%A1%86%E9%97%AE%E9%A2%98"><span class="toc-text">video部分浏览器出现边框问题</span></a></li></ol>
 </div>
             </main>
             <aside class="right-column">
@@ -467,7 +466,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E5%B5%8C%E5%A5%97-if%E2%80%A6else-%E6%88%96-switch-case%EF%BC%8C%E7%AE%80%E5%8D%95%E5%9C%B0%E4%BD%BF%E7%94%A8%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6AND-x2F-OR%E3%80%82"><span class="toc-text">减少嵌套 if…else 或 switch case，简单地使用基本的逻辑运算符AND&#x2F;OR。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rest%EF%BC%88%E5%89%A9%E4%BD%99%EF%BC%89-amp-Spread-%EF%BC%88%E6%89%A9%E5%B1%95%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6-%E2%80%A6%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%84%8F%E4%B9%89"><span class="toc-text">Rest（剩余） &amp; Spread （扩展）运算符(…的两种意义)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7"><span class="toc-text">开发技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%B9%E6%A1%86%E8%99%9A%E7%BA%BF"><span class="toc-text">自定义边框虚线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%95%B4%E4%BD%93%E7%BD%AE%E7%81%B0"><span class="toc-text">项目整体置灰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video%E9%83%A8%E5%88%86%E6%B5%8F%E8%A7%88%E5%99%A8%E5%87%BA%E7%8E%B0%E8%BE%B9%E6%A1%86%E9%97%AE%E9%A2%98"><span class="toc-text">video部分浏览器出现边框问题</span></a></li></ol>
     </article>
   
   
