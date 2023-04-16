@@ -18,17 +18,17 @@
   <link 
     rel="icon" 
     href="/">
-  <title>包管理器命令</title>
+  <title>混合开发介绍</title>
   
     
       <meta 
         property="og:title" 
-        content="包管理器命令">
+        content="混合开发介绍">
     
     
       <meta 
         property="og:url" 
-        content="https://www.liyueer.cn/posts/187a3295.html">
+        content="https://www.liyueer.cn/posts/cb099fff.html">
     
     
       <meta 
@@ -46,10 +46,10 @@
         content="article">
       <meta 
         property="og:article:published_time" 
-        content="2023-04-03">
+        content="2023-04-16">
       <meta 
         property="og:article:modified_time" 
-        content="2023-04-05">
+        content="2023-04-16">
       <meta 
         property="og:article:author" 
         content="李自力">
@@ -318,7 +318,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BA%94%E7%94%A8%E7%9A%84%E5%BC%80%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">传统移动端应用的开发的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">原生开发的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E5%8A%A3%E5%8A%BF"><span class="toc-text">原生开发的劣势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hybrid%E5%BC%80%E5%8F%91"><span class="toc-text">Hybrid开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSBridge-webView"><span class="toc-text">一、JSBridge + webView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JS-%E5%8E%9F%E7%94%9FUI"><span class="toc-text">二、JS + 原生UI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">混合开发的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-text">混合开发的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E7%BB%98%E5%BC%95%E6%93%8E"><span class="toc-text">三、自绘引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#QtMobile"><span class="toc-text">QtMobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flutter"><span class="toc-text">Flutter</span></a></li></ol></li></ol></li></ol>
       </div>
     </article>
   
@@ -359,21 +359,21 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      包管理器命令
+      混合开发介绍
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2023-04-03T09:19:35.434Z">
+    <time datetime="2023-04-16T08:39:33.968Z">
       <i 
         class="iconfont icon-calendar" 
         style="margin-right: 2px;">
       </i>
-      <span>2023-04-03</span>
+      <span>2023-04-16</span>
     </time>
     
     
       <span class="dot"></span>
-      <span>1.1k 字</span>
+      <span>1.3k 字</span>
     
   </div>
   
@@ -381,15 +381,31 @@
   <div 
     id="section" 
     class="post-content">
-    <p>记录一下各种开发中能够用到的工具命令,方便快速查询到一些常用命令</p>
-<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><div class="post-note note-info"><p>设置包下载源：yarn config set npmRegistryServer<br>查看当前包下载源：yarn config get registry<br>自动安装最新版本，会覆盖指定版本号：yarn add [package]<br>一次性添加多个包：yarn add [package] [package] [package]<br>添加指定版本的包：yarn add [package]@[version]<br>安装某个tag：yarn add [package]@[tag]<br>添加到devDependencies：–dev，-D<br>添加到peerDependencies：–peer， -P<br>添加到optionalDependencies：–optional，-O<br>升级到最新版本：yarn upgrade [package]<br>升级到指定版本：yarn upgrade [package]@[version]<br>升级到指定tag：yarn upgrade [package]@[tag]<br>移除包：yarn remove [package]<br>安装所有依赖： yarn，yarn install<br>安装一个包的单一版本：yarn install –flat<br>强制重新下载所有包：yarn install –force<br>只安装生产环境依赖：yarn install –production<br>可以用来查看某个模块的最新版本信息：yarn info [package]<br>列出已缓存的每个包：yarn cache list<br>返回全局缓存位置：yarn cache dir<br>清除缓存：yarn cache clean </p></div>
-<h2 id="yrm"><a href="#yrm" class="headerlink" title="yrm"></a>yrm</h2><div class="post-note note-info"><p>yrm 是一个 yarn源管理器，可以快速地在源间切换<br>查看已有源：yrm ls<br>使用xxx镜像源： yrm use xxx<br>增加一个源：yrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除源: yrm del &lt;源名称&gt;<br>测试xx镜像源访问速度：yrm test taobao<br>查看npm当前镜像源：npm config get registry<br>查看yarn当前镜像源：yarn config get registry </p></div>
-<h2 id="npm、cnpm"><a href="#npm、cnpm" class="headerlink" title="npm、cnpm"></a>npm、cnpm</h2><div class="post-note note-info"><p>设置包下载源：npm config set registry<br>获取包下载源：npm config get registry<br>安装所有依赖: npm install，npm i<br>安装到全局目录里：-g，–global<br>添加到dependencies：-S，–save<br>添加到devDependencies-D，–save-dev<br>卸载依赖，不卸载package.json的对应信息：npm uninstall [package]<br>卸载全局模块：npm uninstall [package] -g<br>卸载依赖，不卸载package.json中的dependencies对应信息：npm uninstall [package] –save<br>卸载依赖，同时package.json中的devDependencies对应信息：npm uninstall [package] –save-dev<br>更新最新版本:npm update [package]<br>更新到指定版本号:npm update [package]@[version]<br>更新到最后一个新版本:npm install [package]@latest<br>查看项目中模块所在的目录：npm root<br>查看全局安装的模块所在目录：npm root -g<br>查看本地已安装模块的清单列表:npm list， npm ls<br>查看某个包对于各种包的依赖关系：npm view [version] dependencies<br>查看[package]最新的版本号：npm view [package] version<br>查看所有[package]历史版本号：npm view [package] versions<br>查看最新的[package]版本的信息：npm view [package]<br>查看[package]的详细信息：npm info [package]<br>查看本地已安装的[package]的详细信息：npm list [package] ，npm ls [package]<br> 查看[package]包的来源地址：npm view [package] repository.url<br>清除npm的缓存：npm cache clean<br>清除项目中没有被使用的包：npm prune<br>检查模块是否已经过时：npm outdated<br>会打开默认浏览器跳转到github中[package]的页面：npm repo [package]<br>会打开默认浏览器跳转到github中jquery的README.MD文件信息：npm docs [package]<br>会打开默认浏览器跳转到github中jquery的主页：npm home [package]</p></div>
-<h2 id="nrm"><a href="#nrm" class="headerlink" title="nrm"></a>nrm</h2><div class="post-note note-info"><p>nrm can help you easy and fast switch between different npm registries（nrm可以帮助您在不同的npm镜像源之间轻松快速地切换）<br>列出所有源： nrm ls<br>查看当前源：nrm current<br>使用某个源：nrm use &lt;源名称&gt;<br>添加一个源：nrm add &lt;源名称&gt; &lt;源地址&gt;<br>删除一个源：nrm del &lt;源名称&gt;<br>  <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/nrm">nrm查看更多指令</a></p></div>
-<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><div class="post-note note-info"><p>pnpm也称高性能npm,相比npm、yarn优势在于节省磁盘空间并提升安装速度。<br>安装依赖：pnpm install xxx&#x2F;pnpm i xxx<br>设置包下载源：pnpm config set registry<br>获取包下载源：pnpm config get registry<br>安装依赖到dependencies:pnpm add<br>安装依赖到devDependencies：pnpm add -D<br>更新依赖包：pnpm update [package]，pnpm up [package]	<br>删除依赖包：pnpm remove [package]<br>所有命令查询文档：<a target="_blank" rel="noopener" href="https://www.pnpm.cn/cli/add">pnpm中文文档-CLI命令</a></p></div>
-<h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><div class="post-note note-info"><p>安装指定版本node：nvm install vx.x.x<br>安装最新node：nvm install stable<br>设置node默认版：nvm alias default [node版本号]<br>删除指定版本node：nvm uninstall vx.x.x<br>查看所有已安装版本： nvm ls，nvm list<br>列出所以远程服务器的版本：nvm ls-remote<br>显示当前的版本：nvm current<br>给不同的版本号添加别名：nvm alias<br>删除已定义的别名：nvm unalias<br>在当前版本node下，重新全局安装指定版本号的npm包：nvm reinstall-packages<br>查看当前版本： nvm -v<br><a target="_blank" rel="noopener" href="https://nvm.uihtm.com/">nvm官方文档</a></p></div>
-<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><div class="post-note note-info"></div>
-<h2 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h2><div class="post-note note-info"></div>
+    <h1 id="传统移动端应用的开发的问题"><a href="#传统移动端应用的开发的问题" class="headerlink" title="传统移动端应用的开发的问题"></a>传统移动端应用的开发的问题</h1><h2 id="原生开发的优势"><a href="#原生开发的优势" class="headerlink" title="原生开发的优势"></a>原生开发的优势</h2><ul>
+<li>用户体验感好：基于原生客户端语言开发，能最大化的利用设备的性能，提供最优的产品体验</li>
+<li>能力强：可以直接和操作系统交互并调用其API，可以实现几乎全部能在移动设备实现的功能和场景</li>
+</ul>
+<h2 id="原生开发的劣势"><a href="#原生开发的劣势" class="headerlink" title="原生开发的劣势"></a>原生开发的劣势</h2><ul>
+<li>动态性：客户端开发通常是有固定的版本发布计划，而且受限于Apple的APP Store审核规则，版本发布的不确定性还会受到政策影响，Android在国内的渠道众多，每次发版都要反复检查渠道，一旦发现线上问题，需要依赖再发版本，容错成本非常高，这也大大增加了对业务的局限性</li>
+<li>开发成本：客户端的开发成本高，然而生态还不如Web丰富，npm社区的几万开源包，就爱生更活跃的开发者社区，导致企业来讲客户端的研发成本高于Web开发</li>
+<li>跨端一致性：传统客户端开发一套业务，需要实现Android和IOS两套代码，而且由于Android和IOS的操作系统能力差异，同样的需求往往会用不同的视觉和交互来实现，这也导致业务成本居高不下</li>
+</ul>
+<h1 id="Hybrid开发"><a href="#Hybrid开发" class="headerlink" title="Hybrid开发"></a>Hybrid开发</h1><h2 id="一、JSBridge-webView"><a href="#一、JSBridge-webView" class="headerlink" title="一、JSBridge + webView"></a>一、JSBridge + webView</h2><p>H5 + 原生的开发形式，是混合开发的主流。使用原生技术搭建APP框架，使用H5动态下发内容。由于H5代码只需要开发一次，就能够同时在Android和iOS两个平台同时运行，减小开发成本。H5部分功能越多成本越小。我们称这种H5 + 原生的开发模式为<strong>混合开发</strong>，采用混合模式开发的APP我们称之为<strong>混合应用</strong>或<strong>Hybrid APP</strong>，如果一个应用的大多数功能都是H5实现的话，这就是一个Web APP。混合开发的技术难点原生和H5之间的交互。一般情况下，而JSBridge就是H5与原生交互的方式。例如微信内部的H5开发<br><strong>问题：性能瓶颈导致用户体验不佳，复杂功能难以实现</strong><br><strong>性能差：除了H5与原生不搭配，H5本身就会出现先要在服务器上下载模板、加载资源，资源加载完毕后JS执行阶段才会发起请求获取数据进行渲染、JS的单线程 、交互体验需要专门处理， 调用原生能力复杂，需要客户端进行桥接，提前封装并规定好对接协议，提供给H5、大量重排会容易产生卡顿和掉帧</strong><br><strong>优化：</strong></p>
+<h2 id="二、JS-原生UI"><a href="#二、JS-原生UI" class="headerlink" title="二、JS + 原生UI"></a>二、JS + 原生UI</h2><p>JavaScript开发 + 原生渲染的开发方式目前特指Facebook开源的React Native以及阿里开源的Weex。其核心技术点就是：把DOM树映射成原生的控件树。框架会把DOM树自动转化为不同平台的控件树，其最终还是调用原生API来绘制，JS还是和webView一样，再打开APP时会拉去bingdomjs</p>
+<h3 id="混合开发的优点"><a href="#混合开发的优点" class="headerlink" title="混合开发的优点"></a>混合开发的优点</h3><ul>
+<li>社区庞大，开发成本低</li>
+<li>使用前端技术框架，原生渲染，性能可以接受</li>
+<li>支持热更新；（目前iOS端有风险，热更新应用禁止上架到APP Store）</li>
+</ul>
+<p><strong>性能能：打开APP会异步去请求jsbundle，获取到jsbundle后使用JavaScript引擎解析它，渲染成对应平台的原生控件树，与原生通信频率增加性能缺陷越明显</strong><br><strong>优化：预请求或缓存jsbundle，减少资源请求，节流防抖出发通信</strong></p>
+<h3 id="混合开发的缺点"><a href="#混合开发的缺点" class="headerlink" title="混合开发的缺点"></a>混合开发的缺点</h3><ul>
+<li>因为要和原生通信，难以胜任复杂的绘制与动画工作</li>
+<li>js为脚本语言，解释执行，性能和原生开发编译后运行，有一定差距</li>
+<li>调用系统硬件功能非常麻烦，频繁渲染造成频繁通信导致性能缺陷，</li>
+</ul>
+<h2 id="三、自绘引擎"><a href="#三、自绘引擎" class="headerlink" title="三、自绘引擎"></a>三、自绘引擎</h2><p>不依赖操作系统提供的布局、原生组件能力，直接调用GPU或者地城抽象层进行绘制的渲染引擎。</p>
+<h3 id="QtMobile"><a href="#QtMobile" class="headerlink" title="QtMobile"></a>QtMobile</h3><p>基于c++，最终表现不佳</p>
+<h3 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h3><p>2018年Flutter诞生，通过Dart语言构建一套跨平台的开发组件，所有组件基于Skia引擎自绘，在性能上和Native平台的View相媲美，同时解决了上一代框架难以解决的双端一致性等问题，引起大家广泛关注，充分验证了通过绘制构建组件做到Native View 媲美的UI渲染引擎的可行性<br>Flutter是Google推出并开源的移动应用开发框架，主打跨平台、高保真、高性能。开发者可以通过Dart语言开发APP，一套代码同事运行在iOS和Android平台，Flutter提供了丰富的组件、接口，开发者可以很快的为Flutter添加Native扩展。<br>**跨平台自绘引擎skia  **<br><strong>dart语言</strong><br><strong>高性能</strong><br><strong>AOT（提前编译）</strong><br><strong>JIT（即时编译）</strong><br>支持Android iOS 车载 手表</p>
 
   </div>
   <div>
@@ -409,8 +425,8 @@
           <span style="font-weight: bold;">文章链接：</span><a 
             target="_blank" 
             rel="nofollow noopener noreferrer" 
-            href="https://www.liyueer.cn/posts/187a3295.html">
-            https://www.liyueer.cn/posts/187a3295.html
+            href="https://www.liyueer.cn/posts/cb099fff.html">
+            https://www.liyueer.cn/posts/cb099fff.html
           </a>
         </p>
         <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
@@ -420,20 +436,20 @@
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
+  
+    <div class="nav-item-next">
       <a 
-        href="/posts/fd390730.html" 
+        href="/posts/3a36e4b1.html" 
         class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
         <div>
-          <div class="nav-label">上一篇</div>
+          <div class="nav-label">下一篇</div>
           
-            <div class="nav-title">自动创建html </div>
+            <div class="nav-title">前端所遇到的问题 </div>
           
         </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
       </a>
     </div>
-  
   
 </div>
 
@@ -453,7 +469,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BA%94%E7%94%A8%E7%9A%84%E5%BC%80%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">传统移动端应用的开发的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">原生开发的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E5%8A%A3%E5%8A%BF"><span class="toc-text">原生开发的劣势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hybrid%E5%BC%80%E5%8F%91"><span class="toc-text">Hybrid开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSBridge-webView"><span class="toc-text">一、JSBridge + webView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JS-%E5%8E%9F%E7%94%9FUI"><span class="toc-text">二、JS + 原生UI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">混合开发的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-text">混合开发的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E7%BB%98%E5%BC%95%E6%93%8E"><span class="toc-text">三、自绘引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#QtMobile"><span class="toc-text">QtMobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flutter"><span class="toc-text">Flutter</span></a></li></ol></li></ol></li></ol>
 </div>
             </main>
             <aside class="right-column">
@@ -467,7 +483,7 @@
     style="padding-right: 2px;">
   </i>目录
 </div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yrm"><span class="toc-text">yrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E3%80%81cnpm"><span class="toc-text">npm、cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nrm"><span class="toc-text">nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pnpm"><span class="toc-text">pnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm"><span class="toc-text">nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack"><span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite"><span class="toc-text">vite</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BA%94%E7%94%A8%E7%9A%84%E5%BC%80%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">传统移动端应用的开发的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">原生开发的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E7%9A%84%E5%8A%A3%E5%8A%BF"><span class="toc-text">原生开发的劣势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hybrid%E5%BC%80%E5%8F%91"><span class="toc-text">Hybrid开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSBridge-webView"><span class="toc-text">一、JSBridge + webView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JS-%E5%8E%9F%E7%94%9FUI"><span class="toc-text">二、JS + 原生UI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">混合开发的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-text">混合开发的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E7%BB%98%E5%BC%95%E6%93%8E"><span class="toc-text">三、自绘引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#QtMobile"><span class="toc-text">QtMobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flutter"><span class="toc-text">Flutter</span></a></li></ol></li></ol></li></ol>
     </article>
   
   
