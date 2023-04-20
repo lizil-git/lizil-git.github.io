@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="个人学习成长之路">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>基于fabricjs搭建canvas画布</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="基于fabricjs搭建canvas画布">
+    
+    
+      <meta 
+        property="og:url" 
+        content="https://www.liyueer.cn/posts/2bdb1f55.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://www.liyueer.cn/img/1.png">
+    
+    
+      <meta 
+        property="og:img" 
+        content="个人学习成长之路">
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-04-20">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-04-20">
+      <meta 
+        property="og:article:author" 
+        content="李自力">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+    
+    <link rel="prefetch" href="//unpkg.com/valine/dist/Valine.min.js" as="script">
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">个人博客</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          首页
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          归档
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          标签
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          分类
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          关于
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          友链
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://www.liyueer.cn/img/1.png" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">李自力</p>
+<p class="author-description">个人学习之路</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>11</span>
+    <span>文章</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>分类</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9fabricjs"><span class="toc-text">为什么选择fabricjs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-text">画布需求分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD"><span class="toc-text">基础功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">搭建画布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric%E5%88%9B%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">fabric创建画布</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stage%E7%B1%BB"><span class="toc-text">Stage类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="toc-text">基本的页面布局</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地上传</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地图片上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E6%B8%B2%E6%9F%93%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-text">画布渲染上传的图片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">画布基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%B9%B3%E7%A7%BB"><span class="toc-text">画布平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE"><span class="toc-text">画布缩放</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%BC%A9%E6%94%BE"><span class="toc-text">输入缩放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE-1"><span class="toc-text">画布缩放</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">图片基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE"><span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6-x2F-%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82"><span class="toc-text">合并&#x2F;解散图层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">合并图层实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">解散图层实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E7%AC%94"><span class="toc-text">画笔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A9%A1%E7%9A%AE%E6%93%A6"><span class="toc-text">橡皮擦</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%94%BB%E5%B8%83"><span class="toc-text">下载画布</span></a></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>分类
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>热门标签
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      基于fabricjs搭建canvas画布
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-04-20T07:55:01.188Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-04-20</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>4.1k 字</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h1 id="为什么选择fabricjs"><a href="#为什么选择fabricjs" class="headerlink" title="为什么选择fabricjs"></a>为什么选择fabricjs</h1><p>canvas画布由于本身提供的api使用上并不是很便捷，所以一般在进行canvas画布使用的时候，我们会选用一些三方库。这些三方库对一些常用api进行了聚合和封装改进，更进一步的会在上层在做一些其他的处理，这里面做的比较好的有<a target="_blank" rel="noopener" href="http://fabricjs.com/">fabricjs</a>、<a target="_blank" rel="noopener" href="https://pixijs.com/">pixi</a>,其中fabricjs相对来说时间更久，类似于jquery在js中的地位</p>
+<h1 id="画布需求分析"><a href="#画布需求分析" class="headerlink" title="画布需求分析"></a>画布需求分析</h1><p>我们实现一个画布前，首先得清楚画布需要实现的基本功能。这里我们梳理一下一个画布必须包含的基础能力。</p>
+<h2 id="基础功能"><a href="#基础功能" class="headerlink" title="基础功能"></a>基础功能</h2><ol>
+<li>无限画布 这应该是先有canvas画布插件统一提供的基础能力</li>
+<li>本地上传 本地资源可以上传到画布实现渲染</li>
+<li>画布操作<ol>
+<li>画布平移</li>
+<li>画布缩放(鼠标位置作为中心点)</li>
+</ol>
+</li>
+<li>图片操作<ol>
+<li>图片拖动</li>
+<li>图片缩放</li>
+</ol>
+</li>
+<li>画笔 画笔的基础参数修改，画笔粗细、颜色</li>
+<li>橡皮擦 也是基础配置的修改，橡皮擦的大小</li>
+<li>下载画布 如何可以完整的下载整张画布上的所有资源，包括不在屏幕内但处于画布上的元素</li>
+</ol>
+<h1 id="搭建画布"><a href="#搭建画布" class="headerlink" title="搭建画布"></a>搭建画布</h1><h2 id="fabric创建画布"><a href="#fabric创建画布" class="headerlink" title="fabric创建画布"></a>fabric创建画布</h2><p>fabric创建画布其实很简单，接下来我们就通过fabric先来创建一个画布</p>
+<pre class="highlight"><code class="hljs bash">&lt;script src=<span class="hljs-string">&quot;/src/assets/js/fabric.min.js&quot;</span>&gt;&lt;/script&gt;<br>&lt;canvas <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;c&quot;</span>&gt;&lt;/canvas&gt;<br></code></pre>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">new</span> fabric.<span class="hljs-title class_">Canvas</span>(<span class="hljs-string">&#x27;c&#x27;</span>, &#123;&#125;)<br></code></pre>
+<p>首先引入fabricjs，在html中创建一个canvas标签用来作为我们的目标画布。接下来要通过fabric创建一个画布，我们只需要new一个fabric.Canvas对象就可以了 此处可以有一些参数，常见的比如width、height</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">new</span> fabric.<span class="hljs-title class_">Canvas</span>(<span class="hljs-string">&#x27;c&#x27;</span>, &#123;    <span class="hljs-attr">width</span>: <span class="hljs-string">&#x27;800px&#x27;</span>,    <span class="hljs-attr">height</span>: <span class="hljs-string">&#x27;500px&#x27;</span>&#125;)<br></code></pre>
+<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>为了方便后面维护以及调用，我们在此处可以针对需求的画布进行对象封装,然后在对外暴露出画布操作需要的api</p>
+<h2 id="Stage类"><a href="#Stage类" class="headerlink" title="Stage类"></a>Stage类</h2><p>提供基础的Stage类作为我们的画布对象, 在new 时调用我们上面new fabric.Canvas(‘c’, {})方法来创建一个画布<br>通过 innerWidth&#96;&#96;innerHeight将画布的大小设置为全屏</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Stage</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">el</span>)&#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span> = el;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">canvas</span> = <span class="hljs-literal">null</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">init</span>();<br>    &#125;<br>    <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;缺少el元素&quot;</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">canvas</span> = <span class="hljs-keyword">new</span> fabric.<span class="hljs-title class_">Canvas</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>, &#123;<br>            <span class="hljs-attr">width</span>: innerWidth,<br>            <span class="hljs-attr">height</span>: innerHeight,<br>        &#125;);<br>    &#125;<br>&#125;<br><br></code></pre>
+<p>此时我们再创建一个画布，通过以下方式</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Stage</span>(c)<br></code></pre>
+<h2 id="基本的页面布局"><a href="#基本的页面布局" class="headerlink" title="基本的页面布局"></a>基本的页面布局</h2><p>画布的功能比如上传、画笔、橡皮擦等都需要页面上有固定的按钮来触发，所以我们的页面需要有一个简单的布局，也就是需要一个toolbar来安置这些按钮。<br>so我们写一个简单的toolbar组件放在我们画布的顶部<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1681976593357-7f852260-dcbb-41d8-b762-24764a04af4f.png#averageHue=%23efefee&clientId=uaa2f216b-c007-4&from=paste&id=u18e5faf8&originHeight=1300&originWidth=2440&originalType=url&ratio=2&rotation=0&showTitle=false&status=done&style=none&taskId=u2a53defd-79e0-43fe-b810-bf5a477e5a8&title=" class="lozad post-image"src="https://cdn.nlark.com/yuque/0/2023/png/28427234/1681976593357-7f852260-dcbb-41d8-b762-24764a04af4f.png#averageHue=%23efefee&clientId=uaa2f216b-c007-4&from=paste&id=u18e5faf8&originHeight=1300&originWidth=2440&originalType=url&ratio=2&rotation=0&showTitle=false&status=done&style=none&taskId=u2a53defd-79e0-43fe-b810-bf5a477e5a8&title="></p>
+<p>前面我们已经创建了一个画布，接下来我们来实现画布里面的具体功能。</p>
+<h1 id="本地上传"><a href="#本地上传" class="headerlink" title="本地上传"></a>本地上传</h1><p>我们来分析本地上传的功能，不考虑后端存储，其实本地上传就本地应用来说主要分为两部分，以图片为例：</p>
+<ol>
+<li>本地图片上传</li>
+<li>画布渲染上传的图片</li>
+</ol>
+<h2 id="本地图片上传"><a href="#本地图片上传" class="headerlink" title="本地图片上传"></a>本地图片上传</h2><p>首先我们来实现本地图片上传，此处可以直接使用element-ui的el-upload组件来实现本地文件的上传,只需在原有上传的时候进行拦截获取就行</p>
+<pre class="highlight"><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">el-upload</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-model:file-list</span>=<span class="hljs-string">&quot;fileList&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;upload-demo&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">multiple</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:limit</span>=<span class="hljs-string">&quot;100&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:before-upload</span>=<span class="hljs-string">&quot;handleUpload&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:show-file-list</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;primary&quot;</span>&gt;</span>本地上传<span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">el-upload</span>&gt;</span><br></code></pre>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 上传时触发回调</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; rawFile file对象的上传数据</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">boolean</span>&#125; 是否终止后续操作</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">handleUpload</span> = (<span class="hljs-params">rawFile</span>) =&gt; &#123;<br>  <span class="hljs-comment">// 此处暂时不用关注，重点是获取到上传的图片数据</span><br>  stage.<span class="hljs-title function_">addImg</span>(file);<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;;<br></code></pre>
+<p>上面我们获取到了要上传的图片数据，接下来我们将获取到的图片资源渲染到我们画布上</p>
+<h2 id="画布渲染上传的图片"><a href="#画布渲染上传的图片" class="headerlink" title="画布渲染上传的图片"></a>画布渲染上传的图片</h2><p>fabricjs中我们要把画布渲染到画布上有两种方法：</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 同步加载</span><br>fabric.<span class="hljs-property">Image</span><br></code></pre>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 异步加载</span><br>fabric.<span class="hljs-property">Image</span>.<span class="hljs-property">fromURL</span><br></code></pre>
+<p>介于我们目前已经拿到本地上传的file文件，同时本地环境下因为没有后端存储又受浏览器限制获取不到本地文件有效的url地址，所以此处加载图片我们选择同步加载<br>另一方面因为我们此时拿到的是file文件，所以我们首先需要做的是怎么把file文件转换为image对象<br>image对象很好获取，new Image()然后加载一下对应的图片就可以获取到，但image对象怎么加载file文件呢？<br>此处我们需要了解一个api <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader">FileReader</a>对象, 使用FileReader我们可以读取file文件</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 画布添加元素，渲染图片</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">object</span>&#125; file 待上传的file数据</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">addImg</span>(<span class="hljs-params">file</span>) &#123;<br>    <span class="hljs-comment">// 读取图片数据</span><br>    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();<br>    reader.<span class="hljs-title function_">readAsDataURL</span>(file);<br>    reader.<span class="hljs-property">onloadend</span> = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> imgobj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Image</span>();<br>      imgobj.<span class="hljs-property">onload</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-comment">// 画布加载、渲染</span><br>        fabric.<span class="hljs-property">Image</span>.<span class="hljs-title function_">fromObject</span>(imgobj, <span class="hljs-function">(<span class="hljs-params">obj</span>) =&gt;</span> &#123;<br>          <span class="hljs-comment">// 调用前面创建画布存储的canvas对象加载image</span><br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">canvas</span>.<span class="hljs-title function_">add</span>(obj);<br>        &#125;);<br>      &#125;;<br>      imgobj.<span class="hljs-property">src</span> = e.<span class="hljs-property">target</span>.<span class="hljs-property">result</span>;<br>    &#125;;<br>  &#125;<br></code></pre>
+
+
+<h1 id="画布基础操作"><a href="#画布基础操作" class="headerlink" title="画布基础操作"></a>画布基础操作</h1><h2 id="画布平移"><a href="#画布平移" class="headerlink" title="画布平移"></a>画布平移</h2><p>fabricjs没有自带的画布平移功能，那我们如何实现呢？首先我们先来整理需求。<br>正常的平移就是按住鼠标拖动画布但需要注意的是如果画布上存在其他元素，比如我们前面上传的图片，鼠标如果按下时刚好处于这些元素上面我们是否需要依旧进行平移操作？如果这个时候我们需要做一些其他操作呢？换句话说就是鼠标处于画布空白位置时正常进行平移， 但如果处于元素上时则不进行平移操作。<br>接下来我们来监听鼠标的相关事件：mouse:down<code>mouse:move</code>mouse:up,来实现一个基础的元素拖动功能</p>
+<pre class="highlight"><code class="hljs javascript">canvas.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;mouse:down&quot;</span>, <span class="hljs-function">(<span class="hljs-params">opt</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 鼠标按下时触发</span><br>  <span class="hljs-keyword">if</span> (!opt.<span class="hljs-property">target</span>) &#123;<br>    <span class="hljs-keyword">let</span> evt = opt.<span class="hljs-property">e</span>;<br>    canvas.<span class="hljs-property">isDragging</span> = <span class="hljs-literal">true</span>; <span class="hljs-comment">// isDragging 是自定义的，开启移动状态</span><br>    canvas.<span class="hljs-property">lastPosX</span> = evt.<span class="hljs-property">clientX</span>; <span class="hljs-comment">// lastPosX 是自定义的</span><br>    canvas.<span class="hljs-property">lastPosY</span> = evt.<span class="hljs-property">clientY</span>; <span class="hljs-comment">// lastPosY 是自定义的</span><br>  &#125;<br>&#125;);<br><br>canvas.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;mouse:move&quot;</span>, <span class="hljs-function">(<span class="hljs-params">opt</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 鼠标移动时触发</span><br>  <span class="hljs-keyword">if</span> (canvas.<span class="hljs-property">isDragging</span>) &#123;<br>    <span class="hljs-keyword">let</span> evt = opt.<span class="hljs-property">e</span>;<br>    <span class="hljs-keyword">let</span> vpt = canvas.<span class="hljs-property">viewportTransform</span>; <span class="hljs-comment">// 聚焦视图的转换</span><br>    vpt[<span class="hljs-number">4</span>] += evt.<span class="hljs-property">clientX</span> - canvas.<span class="hljs-property">lastPosX</span>;<br>    vpt[<span class="hljs-number">5</span>] += evt.<span class="hljs-property">clientY</span> - canvas.<span class="hljs-property">lastPosY</span>;<br>    canvas.<span class="hljs-title function_">requestRenderAll</span>(); <span class="hljs-comment">// 重新渲染</span><br>    canvas.<span class="hljs-property">lastPosX</span> = evt.<span class="hljs-property">clientX</span>;<br>    canvas.<span class="hljs-property">lastPosY</span> = evt.<span class="hljs-property">clientY</span>;<br>  &#125;<br>&#125;);<br><br>canvas.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;mouse:up&quot;</span>, <span class="hljs-function">(<span class="hljs-params">opt</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 鼠标松开时触发</span><br>  canvas.<span class="hljs-title function_">setViewportTransform</span>(canvas.<span class="hljs-property">viewportTransform</span>); <span class="hljs-comment">// 设置此画布实例的视口转换</span><br>  canvas.<span class="hljs-property">isDragging</span> = <span class="hljs-literal">false</span>; <span class="hljs-comment">// 关闭移动状态</span><br>&#125;);<br><br></code></pre>
+<h2 id="画布缩放"><a href="#画布缩放" class="headerlink" title="画布缩放"></a>画布缩放</h2><p>缩放fabricjs本身提供了API来实现这个功能，但默认的功能不符合我们的操作习惯。首先他的缩放是以画布左上角为缩放点进行的缩放，同时也不能跟进鼠标的位置自动进行中心点切换。所以我们来进行一下改造。还是先是先梳理一下我们的需求：</p>
+<ol>
+<li>缩放比例展示在工具栏。同时可以在工具栏手动输入更改</li>
+<li>缩放默认以画布中心点作为缩放中心点</li>
+<li>鼠标如果在画布上，缩放就以鼠标的位置作为中心点进行缩放</li>
+</ol>
+<h3 id="输入缩放"><a href="#输入缩放" class="headerlink" title="输入缩放"></a>输入缩放</h3><p>输入框我们简单使用input的绑定来获取值</p>
+<pre class="highlight"><code class="hljs javascript">&lt;input type=<span class="hljs-string">&quot;range&quot;</span> :min=<span class="hljs-string">&quot;zoom.min * 100&quot;</span> :max=<span class="hljs-string">&quot;zoom.max * 100&quot;</span> v-model=<span class="hljs-string">&quot;zoomVal&quot;</span>/&gt;<br></code></pre>
+<p>拿到zoomVal之后我们需要把值实时更新到canvas画布中,fabricjs中canvas对象提供了setZoom方法用来设置缩放比例</p>
+<pre class="highlight"><code class="hljs javascript">stage.<span class="hljs-property">canvas</span>.<span class="hljs-title function_">setZoom</span>(<span class="hljs-title class_">Number</span>(zoomVal) / <span class="hljs-number">100</span>);<br></code></pre>
+<p>调用后我们发现，画布确实缩放了，但缩放的中心点却是画布的左上角， 这与我们的预期不符, 此时我们希望的默认是以画布中心点进行缩放。<br>查询发现canvas还有一个相关的apizoomToPoint,我们可以通过设置坐标来达到预期的效果。</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">handleZoomChange</span> = (<span class="hljs-params">val</span>) =&gt; &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> val === <span class="hljs-string">&quot;number&quot;</span>) &#123;<br>    zoom.<span class="hljs-property">value</span>.<span class="hljs-property">val</span> = <span class="hljs-title class_">Number</span>(val.<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>));<br>    <span class="hljs-comment">// stage.canvas.setZoom(Number(val) / 100); // 左上角为中心点</span><br>    stage.<span class="hljs-property">canvas</span>.<span class="hljs-title function_">zoomToPoint</span>(<br>      &#123;<br>        <span class="hljs-attr">x</span>: innerWidth / <span class="hljs-number">2</span>,<br>        <span class="hljs-attr">y</span>: innerHeight / <span class="hljs-number">2</span>,<br>      &#125;,<br>      zoom.<span class="hljs-property">value</span>.<span class="hljs-property">val</span><br>    ); <span class="hljs-comment">// 画布中心为中心点</span><br>  &#125;<br>&#125;;<br></code></pre>
+<p>这就实现了画布随着我们输入框输入值变化而变化。接下来我们如何实现在画布上进行缩放呢？同时还需要保持输入框展示的值跟随画布缩放而变化</p>
+<h3 id="画布缩放-1"><a href="#画布缩放-1" class="headerlink" title="画布缩放"></a>画布缩放</h3><p>要实现画布上的缩放， 我们首先需要监听鼠标的滚轮变化情况，为canvas绑定wheel事件- mouse:wheel。事件返回opt会包含fabric提供的一些数据，包括鼠标event数据</p>
+<pre class="highlight"><code class="hljs javascript">canvas.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;mouse:wheel&quot;</span>, <span class="hljs-function">(<span class="hljs-params">opt</span>) =&gt;</span> &#123;&#125;)<br></code></pre>
+<p>通过event我们可以获取到鼠标的位置信息，基于上面提到的canvas.zoomToPoint来设置缩放。基本流程如下</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">let</span> zoom = canvas.<span class="hljs-title function_">getZoom</span>(); <span class="hljs-comment">// 获取画布当前缩放值</span><br><span class="hljs-comment">// 控制缩放范围在 0.01~20 的区间内</span><br>zoom *= <span class="hljs-number">0.999</span> ** delta;<br><span class="hljs-keyword">if</span> (zoom &gt; max) zoom = max;<br><span class="hljs-keyword">if</span> (zoom &lt; min) zoom = min;<br><span class="hljs-comment">// 设置画布缩放比例</span><br><span class="hljs-comment">// 参数1：将画布的所放点设置成鼠标当前位置</span><br><span class="hljs-comment">// 参数2：传入缩放值</span><br>canvas.<span class="hljs-title function_">zoomToPoint</span>(<br>  &#123;<br>    <span class="hljs-attr">x</span>: opt.<span class="hljs-property">e</span>.<span class="hljs-property">offsetX</span>, <span class="hljs-comment">// 鼠标x轴坐标</span><br>    <span class="hljs-attr">y</span>: opt.<span class="hljs-property">e</span>.<span class="hljs-property">offsetY</span>, <span class="hljs-comment">// 鼠标y轴坐标</span><br>  &#125;,<br>  zoom <span class="hljs-comment">// 最后要缩放的值</span><br>);<br><br></code></pre>
+<p>这就实现了鼠标在画布上的缩放， 我们只需要把此处的zoom赋值给input的zoomVal就可以直接实现数据的双向展示。</p>
+<h1 id="图片基础操作"><a href="#图片基础操作" class="headerlink" title="图片基础操作"></a>图片基础操作</h1><p>前面我们在画布中上传了图片, 作为一个工具我们需要能够对上传的元素进行一些基本的操作，比如针对图片进行缩放、拖动、旋转、框选、合并图层、解散图层等。<br>fabric对元素的拖动、旋转以及框选本身提供了相关功能，这里我们就不做说明了。 接下来我们依次来实现图片的缩放、框选、合并图层、解散图层。</p>
+<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><p>前面画布缩放的时候我们针对canvas的mouse:wheel进行了监听，并在里面实现了画布的缩放。这里我们依旧在该监听内来实现元素的缩放。 前面介绍了canvas事件会在回调里返回event对象，所以我们基于event.target（这里和dom是一样的）来判断鼠标下是否有元素</p>
+<pre class="highlight"><code class="hljs javascript">canvas.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;mouse:wheel&quot;</span>, <span class="hljs-function">(<span class="hljs-params">opt</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> &#123; target &#125; = opt;<br>    <span class="hljs-keyword">let</span> delta = opt.<span class="hljs-property">e</span>.<span class="hljs-property">deltaY</span>; <span class="hljs-comment">// 滚轮向上滚一下是 -100，向下滚一下是 100</span><br>    <span class="hljs-keyword">if</span> (target &amp;&amp; target.<span class="hljs-property">type</span> === <span class="hljs-string">&#x27;image&#x27;</span>) &#123;<br>        <span class="hljs-comment">// 获取缩放前的信息数据</span><br>        <span class="hljs-keyword">const</span> height = target.<span class="hljs-title function_">getScaledHeight</span>();<br>        <span class="hljs-keyword">const</span> width = target.<span class="hljs-title function_">getScaledWidth</span>();<br>        <span class="hljs-keyword">const</span> zoomVal = target.<span class="hljs-title function_">getTotalObjectScaling</span>();<br>        <span class="hljs-keyword">const</span> &#123; scaleX, scaleY &#125; = zoomVal;<br>        <span class="hljs-keyword">let</span> X = <span class="hljs-number">0.9999</span> ** delta;<br>        <span class="hljs-keyword">if</span> (X &gt; max) X = max;<br>        <span class="hljs-keyword">if</span> (X &lt; min) X = min;<br>        <span class="hljs-keyword">const</span> Y = X;<br>        <span class="hljs-comment">// 设置缩放大小</span><br>        target.<span class="hljs-title function_">scaleToWidth</span>(width * X, <span class="hljs-literal">true</span>);<br>        target.<span class="hljs-title function_">scaleToHeight</span>(height * Y, <span class="hljs-literal">true</span>);<br>        canvas.<span class="hljs-title function_">requestRenderAll</span>();<br>    &#125;<br>&#125;)<br><br></code></pre>
+<p>元素的缩放与画布不同，需要分别针对元素的width、height进行缩放设置。同时调用canvas.requestRenderAll();来刷新画布元素</p>
+<h2 id="合并-x2F-解散图层"><a href="#合并-x2F-解散图层" class="headerlink" title="合并&#x2F;解散图层"></a>合并&#x2F;解散图层</h2><p>图层合并的功能我们基于分组来实现， 这块都有相关的api,唯一需要注意的是新分组创建是通过对元素的拷贝来创建分组内的元素，原有的元素需要手动删除</p>
+<h4 id="合并图层实现"><a href="#合并图层实现" class="headerlink" title="合并图层实现"></a>合并图层实现</h4><pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   *新建分组</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; canvas 当前画布对象</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; opts 组配置参数</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Object</span>&#125; 返回的group对象</span><br><span class="hljs-comment">   */</span><br><span class="hljs-title function_">create</span>(<span class="hljs-params">canvas, opts</span>) &#123;<br>    <span class="hljs-comment">// 判断当前有没有选中元素，如果没有就不执行任何操作</span><br>    <span class="hljs-keyword">if</span> (!canvas.<span class="hljs-title function_">getActiveObject</span>()) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">const</span> activeObject = canvas.<span class="hljs-title function_">getActiveObject</span>();<br>    <span class="hljs-keyword">const</span> &#123; top, left &#125; = activeObject;<br>    <span class="hljs-keyword">const</span> group = <span class="hljs-keyword">new</span> fabric.<span class="hljs-title class_">Group</span>(activeObject.<span class="hljs-property">_objects</span>, &#123;<br>        top,<br>        left,<br>    &#125;);<br>    activeObject.<span class="hljs-property">_objects</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">element</span>) =&gt;</span> &#123;<br>        canvas.<span class="hljs-title function_">remove</span>(element);<br>    &#125;);<br>    canvas.<span class="hljs-title function_">add</span>(group);<br>    canvas.<span class="hljs-title function_">requestRenderAll</span>();<br>    <span class="hljs-keyword">return</span> group;<br>&#125;<br><br></code></pre>
+<h4 id="解散图层实现"><a href="#解散图层实现" class="headerlink" title="解散图层实现"></a>解散图层实现</h4><pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 解散分组</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; canvas 画布对象</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Object</span>&#125; 返回的group对象</span><br><span class="hljs-comment">   */</span><br><span class="hljs-title function_">dispersed</span>(<span class="hljs-params">canvas</span>) &#123;<br>    <span class="hljs-comment">// 判断当前有没有选中元素，如果没有就不执行任何操作</span><br>    <span class="hljs-keyword">if</span> (!canvas.<span class="hljs-title function_">getActiveObject</span>()) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 判断当前是否选中组，如果不是，就不执行任何操作， 此处需要考虑多选</span><br>    <span class="hljs-keyword">if</span> (canvas.<span class="hljs-title function_">getActiveObject</span>().<span class="hljs-property">type</span> !== <span class="hljs-string">&quot;group&quot;</span>) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 先获取当前选中的对象，然后打散</span><br>    canvas.<span class="hljs-title function_">getActiveObject</span>().<span class="hljs-title function_">toActiveSelection</span>();<br>&#125;<br><br></code></pre>
+<h1 id="画笔"><a href="#画笔" class="headerlink" title="画笔"></a>画笔</h1><p>fabric提供了Brush类， 这里我们使用PencilBrush来实现简单的画笔功能，主要包括画笔颜色更改、笔尖大小更改。<br>方便复用我们创建一个Brush 类来实现</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Brush</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">freeDrawingBrush</span> = <span class="hljs-literal">null</span>;<br>    &#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     *新建画笔</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; canvas 当前画布对象</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-title function_">create</span>(<span class="hljs-params">canvas</span>) &#123;<br>        canvas.<span class="hljs-property">isDrawingMode</span> = <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span> (canvas.<span class="hljs-property">isDrawingMode</span>) &#123;<br>            canvas.<span class="hljs-property">freeDrawingBrush</span> = <span class="hljs-keyword">new</span> fabric.<span class="hljs-title class_">PencilBrush</span>(canvas);<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">freeDrawingBrush</span> = canvas.<span class="hljs-property">freeDrawingBrush</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     *设置画笔颜色</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">string</span>&#125; value 橡皮擦颜色</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-title function_">setColor</span>(<span class="hljs-params">value</span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">freeDrawingBrush</span>.<span class="hljs-property">color</span> = value;<br>    &#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     *设置画笔宽度</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; value 橡皮擦宽度</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-title function_">setWidth</span>(<span class="hljs-params">value</span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">freeDrawingBrush</span>.<span class="hljs-property">width</span> = <span class="hljs-built_in">parseInt</span>(value, <span class="hljs-number">10</span>) || <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     *销毁画笔</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object</span>&#125; canvas 当前画布对象</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-title function_">destory</span>(<span class="hljs-params">canvas</span>) &#123;<br>        canvas.<span class="hljs-property">freeDrawingBrush</span> = <span class="hljs-literal">null</span>;<br>        canvas.<span class="hljs-property">isDrawingMode</span> = <span class="hljs-literal">false</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">freeDrawingBrush</span> = <span class="hljs-literal">null</span>;<br>    &#125;<br>&#125;<br><br></code></pre>
+<p>创建消耗时需要把前面创建的canvas对象传进来</p>
+<h1 id="橡皮擦"><a href="#橡皮擦" class="headerlink" title="橡皮擦"></a>橡皮擦</h1><p>fabric没有橡皮擦相关的实现。我们先来简单的梳理一下橡皮擦的功能，其实很简单就是鼠标滑过的地方按照轨迹清除相关的元素。反过来实现我们可以进行轨迹背景填充。也就是使用画笔来实现橡皮擦的轨迹填充上canvas的背景色。<br>具体功能实现可以调用上main的Brush类。这里就不在重复实现。</p>
+<h1 id="下载画布"><a href="#下载画布" class="headerlink" title="下载画布"></a>下载画布</h1><p>现在我们的画布上已经有了很多元素，各种操作结束后我们如何把编辑的效果下载下来呢？<br>fabric针对canvas提供了toDataURL的API可以以base64格式输出画布数据， 我们基于这个api来实现画布下载的功能<br>在这之前首先我们基于a标签的download来实现一个基础的下载能力，</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// 下载功能</span><br><span class="hljs-keyword">let</span> a = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;a&quot;</span>);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;href&quot;</span>, url);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;download&quot;</span>, name);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;target&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;downLoad&quot;</span>);<br>a.<span class="hljs-title function_">click</span>();<br><br></code></pre>
+
+<p>接着我们来调用toDataURL，将返回的base64赋值给a标签的href</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-keyword">const</span> baseimg = canvas.<span class="hljs-title function_">toDataURL</span>()<br> <span class="hljs-comment">// 下载功能</span><br><span class="hljs-keyword">let</span> a = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;a&quot;</span>);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;href&quot;</span>, baseimg);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;download&quot;</span>, <span class="hljs-string">&#x27;test.jpg&#x27;</span>);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;target&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>);<br>a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;downLoad&quot;</span>);<br>a.<span class="hljs-title function_">click</span>();<br><br></code></pre>
+<p>但这个时候我们就会发现下载下来的图片有些不对，那是因为默认下来下来的只是当前屏幕内的， 所以我们需要在toDataURL的时候对画布进行剪切。也就是说我们需要算出画布上所有元素的范围，然后用这个范围对画布进行裁剪，再下载裁剪后的画布。上代码</p>
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 下载画布</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">string</span>&#125; type 可以下载的图片格式</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">outputImg</span> = (<span class="hljs-params">type</span>) =&gt; &#123;<br>    type = type || <span class="hljs-string">&quot;jpeg&quot;</span>;<br>    <span class="hljs-comment">// 通过偏移量、宽高处理全图</span><br>    <span class="hljs-keyword">const</span> all = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllObject</span>();<br>    <span class="hljs-comment">// 计算画布元素边界</span><br>    <span class="hljs-keyword">const</span> maxleftObj = _.<span class="hljs-title function_">maxBy</span>(all, <span class="hljs-function">(<span class="hljs-params">o</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> o.<span class="hljs-property">left</span>;<br>    &#125;);<br>    <span class="hljs-keyword">const</span> minleftObj = _.<span class="hljs-title function_">minBy</span>(all, <span class="hljs-function">(<span class="hljs-params">o</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> o.<span class="hljs-property">left</span>;<br>    &#125;);<br>    <span class="hljs-keyword">const</span> maxtopObj = _.<span class="hljs-title function_">maxBy</span>(all, <span class="hljs-function">(<span class="hljs-params">o</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> o.<span class="hljs-property">top</span>;<br>    &#125;);<br>    <span class="hljs-keyword">const</span> mintopObj = _.<span class="hljs-title function_">minBy</span>(all, <span class="hljs-function">(<span class="hljs-params">o</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> o.<span class="hljs-property">top</span>;<br>    &#125;);<br>    <span class="hljs-comment">// 剪切画布， 输出画布数据base64格式</span><br>    <span class="hljs-comment">// console.log(111, minleftObj, minleftObj.left, mintopObj, mintopObj.top);</span><br>    <span class="hljs-keyword">const</span> baseimg = <span class="hljs-variable language_">this</span>.<span class="hljs-property">canvas</span>.<span class="hljs-title function_">toDataURL</span>(&#123;<br>        <span class="hljs-attr">format</span>: type,<br>        <span class="hljs-attr">quality</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-comment">// multiplier: this.zoom,</span><br>        <span class="hljs-attr">withoutTransform</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">left</span>: minleftObj.<span class="hljs-title function_">getBoundingRect</span>().<span class="hljs-property">left</span>,<br>        <span class="hljs-attr">top</span>: mintopObj.<span class="hljs-title function_">getBoundingRect</span>().<span class="hljs-property">top</span>,<br>        <span class="hljs-attr">width</span>: (maxleftObj.<span class="hljs-property">left</span> - minleftObj.<span class="hljs-property">left</span> + maxleftObj.<span class="hljs-property">width</span>) * <span class="hljs-variable language_">this</span>.<span class="hljs-property">zoom</span>,<br>        <span class="hljs-attr">height</span>: (maxtopObj.<span class="hljs-property">top</span> - mintopObj.<span class="hljs-property">top</span> + mintopObj.<span class="hljs-property">height</span>) * <span class="hljs-variable language_">this</span>.<span class="hljs-property">zoom</span>,<br>    &#125;);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">canvas</span>.<span class="hljs-title function_">requestRenderAll</span>();<br>    <span class="hljs-comment">// 下载功能</span><br>    <span class="hljs-keyword">let</span> a = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;a&quot;</span>);<br>    a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;href&quot;</span>, baseimg);<br>    a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;download&quot;</span>, <span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-built_in">Date</span>.parse(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>())&#125;</span>.<span class="hljs-subst">$&#123;type&#125;</span>`</span>);<br>    a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;target&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>);<br>    a.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;downLoad&quot;</span>);<br>    a.<span class="hljs-title function_">click</span>();<br>&#125;<br><br></code></pre>
+<p>到这里我们已经实现了一个画布的基础能力，基于这些能力我们就可以做很多事。但这里还有很大的优化空间。比如图片数据量大的时候如何提高canva的渲染能力，虽然fabric内部已经做了离线渲染，但其实我们依旧可以针对元素进行可是区域内外的分批渲染等</p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            李自力
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="https://www.liyueer.cn/posts/2bdb1f55.html">
+            https://www.liyueer.cn/posts/2bdb1f55.html
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采为<a target="_blank" rel="noopener" href="https://github.com/lizil-git">学习探讨所用</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/posts/cb099fff.html" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">下一篇</div>
+          
+            <div class="nav-title">混合开发介绍 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+  <div 
+    class="card card-content comment-card" 
+    style="margin-top: 16px;">
+    <div class="comment-card-title">评论</div>
+    
+  </div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9fabricjs"><span class="toc-text">为什么选择fabricjs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-text">画布需求分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD"><span class="toc-text">基础功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">搭建画布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric%E5%88%9B%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">fabric创建画布</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stage%E7%B1%BB"><span class="toc-text">Stage类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="toc-text">基本的页面布局</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地上传</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地图片上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E6%B8%B2%E6%9F%93%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-text">画布渲染上传的图片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">画布基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%B9%B3%E7%A7%BB"><span class="toc-text">画布平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE"><span class="toc-text">画布缩放</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%BC%A9%E6%94%BE"><span class="toc-text">输入缩放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE-1"><span class="toc-text">画布缩放</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">图片基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE"><span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6-x2F-%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82"><span class="toc-text">合并&#x2F;解散图层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">合并图层实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">解散图层实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E7%AC%94"><span class="toc-text">画笔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A9%A1%E7%9A%AE%E6%93%A6"><span class="toc-text">橡皮擦</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%94%BB%E5%B8%83"><span class="toc-text">下载画布</span></a></li></ol>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>目录
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9fabricjs"><span class="toc-text">为什么选择fabricjs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-text">画布需求分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD"><span class="toc-text">基础功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">搭建画布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric%E5%88%9B%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-text">fabric创建画布</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stage%E7%B1%BB"><span class="toc-text">Stage类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="toc-text">基本的页面布局</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地上传</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0"><span class="toc-text">本地图片上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E6%B8%B2%E6%9F%93%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-text">画布渲染上传的图片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">画布基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E5%B9%B3%E7%A7%BB"><span class="toc-text">画布平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE"><span class="toc-text">画布缩放</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%BC%A9%E6%94%BE"><span class="toc-text">输入缩放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%BB%E5%B8%83%E7%BC%A9%E6%94%BE-1"><span class="toc-text">画布缩放</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">图片基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE"><span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6-x2F-%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82"><span class="toc-text">合并&#x2F;解散图层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">合并图层实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%95%A3%E5%9B%BE%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-text">解散图层实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%BB%E7%AC%94"><span class="toc-text">画笔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A9%A1%E7%9A%AE%E6%93%A6"><span class="toc-text">橡皮擦</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%94%BB%E5%B8%83"><span class="toc-text">下载画布</span></a></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>最近文章
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-20</div>
+        <a href="/posts/2bdb1f55.html"><div class="recent-posts-item-content">基于fabricjs搭建canvas画布</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-16</div>
+        <a href="/posts/cb099fff.html"><div class="recent-posts-item-content">混合开发介绍</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-16</div>
+        <a href="/posts/3a36e4b1.html"><div class="recent-posts-item-content">前端所遇到的问题</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-12</div>
+        <a href="/posts/fe0b65a8.html"><div class="recent-posts-item-content">vue3数据双向绑定原理</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2022
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          个人博客
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Blog
+          <a 
+            href="https://github.com/lizil-git" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;lizil-git
+          </a>
+        
+      </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+    
+      <script> 
+        loadScript('/js/lib/busuanzi.min.js') 
+      </script>
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+      <script>
+        setTimeout(() => {localSearch("search.json")}, 0)
+      </script>
+    
+  </body>
+</html>
